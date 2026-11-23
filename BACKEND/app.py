@@ -29,7 +29,7 @@ from fastapi import FastAPI, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from services import alerts
@@ -390,6 +390,13 @@ def legacy_apispec():
     return app.openapi()
 
 
+@app.get("/docs", include_in_schema=False)
+def standard_docs_alias():
+    """Keep FastAPI's standard docs URL available alongside /apidocs."""
+
+    return RedirectResponse(url="/apidocs", status_code=307)
+
+
 # =========================================================
 # MAIN
 # =========================================================
@@ -406,7 +413,7 @@ if __name__ == "__main__":
     print("=" * 60)
     print("V2V FLEET CONTROL SYSTEM (FastAPI)")
     print("=" * 60)
-    print(f"API docs: http://127.0.0.1:{port}/apidocs")
+    print(f"API docs: http://127.0.0.1:{port}/apidocs (also /docs)")
     print(f"Health:   http://127.0.0.1:{port}/api/health")
     print(f"Vehicles: http://127.0.0.1:{port}/api/vehicles")
     print(f"Fleet: {fleet.fleet_size()} vehicle(s) in {fleet.DATA_FILE}")
