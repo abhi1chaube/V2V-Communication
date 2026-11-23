@@ -1,0 +1,14 @@
+{
+  "title": "Busy yard (all vehicles at once)",
+  "description": "Concurrent dispatch: every vehicle cycles at the same time, 10 s apart. They queue for the loading slot (roadside unit SLOT_GRANT), platoon on the outbound road, keep the minimum gap, and take turns on the single lane at Stop 1.",
+  "seed": 2024,
+  "min_vehicles": 3,
+  "duration_s": 360,
+  "setup": {
+    "dispatch": "concurrent",
+    "autopilot": "fleet"
+  },
+  "timeline": [
+    {"t": 0, "action": "note", "text": "All vehicles cycle together; watch the slot queue at Stop 2."}
+  ]
+}

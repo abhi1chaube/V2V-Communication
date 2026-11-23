@@ -1,0 +1,3386 @@
+{
+  "root": {
+    "request": "GET /",
+    "status": 200,
+    "body": {
+      "data": {
+        "service": "V2V Fleet Control System",
+        "swagger": "/apidocs/",
+        "version": "2.0.0"
+      },
+      "message": "V2V Fleet Control Backend online.",
+      "success": true
+    }
+  },
+  "health": {
+    "request": "GET /api/health",
+    "status": 200,
+    "body": {
+      "backend": "online",
+      "fleet": {
+        "count": 2,
+        "data_file": "<WORK>\\vehicles.json",
+        "problems": []
+      },
+      "services": {
+        "events": "online",
+        "hardware": "online",
+        "safety": "online",
+        "state": "online",
+        "thingsboard": "online"
+      },
+      "success": true,
+      "swagger": "/apidocs/",
+      "thingsboard": {
+        "connected": true,
+        "message": "ThingsBoard connection successful."
+      }
+    }
+  },
+  "hardware": {
+    "request": "GET /api/hardware",
+    "status": 200,
+    "body": {
+      "data": {
+        "connected": false,
+        "hardware_mode": "simulation",
+        "message": "Hardware interface is ready. Real sensors are not connected yet.",
+        "sensors": {
+          "brake_actuator": {
+            "available": false,
+            "mode": "simulation",
+            "status": "not_connected"
+          },
+          "emergency_stop": {
+            "available": false,
+            "mode": "simulation",
+            "status": "not_connected"
+          },
+          "load_sensor": {
+            "available": false,
+            "mode": "simulation",
+            "status": "not_connected"
+          },
+          "motor_controller": {
+            "available": false,
+            "mode": "simulation",
+            "status": "not_connected"
+          },
+          "qr_sensor": {
+            "available": false,
+            "mode": "simulation",
+            "status": "not_connected"
+          },
+          "radar_sensor": {
+            "available": false,
+            "mode": "simulation",
+            "status": "not_connected"
+          }
+        },
+        "simulation": true
+      },
+      "message": "Hardware status retrieved.",
+      "success": true
+    }
+  },
+  "unknown_route": {
+    "request": "GET /api/does-not-exist",
+    "status": 404,
+    "body": {
+      "message": "API route not found.",
+      "path": "/api/does-not-exist",
+      "success": false
+    }
+  },
+  "vehicles_list": {
+    "request": "GET /api/vehicles",
+    "status": 200,
+    "body": {
+      "data": {
+        "count": 2,
+        "problems": [],
+        "vehicles": [
+          {
+            "color": "yellow",
+            "device_id": "00000000-0000-4000-8000-000000000001",
+            "has_token": true,
+            "managed": false,
+            "name": "Vehicle_01",
+            "short_name": "V01",
+            "token_hint": "••••0001",
+            "vehicle_id": "Vehicle_01"
+          },
+          {
+            "color": "blue",
+            "device_id": "00000000-0000-4000-8000-000000000002",
+            "has_token": true,
+            "managed": false,
+            "name": "Vehicle_02",
+            "short_name": "V02",
+            "token_hint": "••••0002",
+            "vehicle_id": "Vehicle_02"
+          }
+        ]
+      },
+      "message": "Registered vehicles retrieved.",
+      "success": true
+    }
+  },
+  "vehicles_search": {
+    "request": "GET /api/vehicles?search=02",
+    "status": 200,
+    "body": {
+      "data": {
+        "count": 1,
+        "problems": [],
+        "vehicles": [
+          {
+            "color": "blue",
+            "device_id": "00000000-0000-4000-8000-000000000002",
+            "has_token": true,
+            "managed": false,
+            "name": "Vehicle_02",
+            "short_name": "V02",
+            "token_hint": "••••0002",
+            "vehicle_id": "Vehicle_02"
+          }
+        ]
+      },
+      "message": "Registered vehicles retrieved.",
+      "success": true
+    }
+  },
+  "vehicles_search_none": {
+    "request": "GET /api/vehicles?search=zzz",
+    "status": 200,
+    "body": {
+      "data": {
+        "count": 0,
+        "problems": [],
+        "vehicles": []
+      },
+      "message": "Registered vehicles retrieved.",
+      "success": true
+    }
+  },
+  "vehicle_get_id": {
+    "request": "GET /api/vehicles/Vehicle_01",
+    "status": 200,
+    "body": {
+      "data": {
+        "config": {
+          "color": "yellow",
+          "device_id": "00000000-0000-4000-8000-000000000001",
+          "has_token": true,
+          "managed": false,
+          "name": "Vehicle_01",
+          "short_name": "V01",
+          "token_hint": "••••0001",
+          "vehicle_id": "Vehicle_01"
+        },
+        "vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "NONE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "IDLE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "waiting",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        }
+      },
+      "message": "Latest vehicle telemetry retrieved.",
+      "success": true
+    }
+  },
+  "vehicle_get_alias": {
+    "request": "GET /api/vehicles/yellow",
+    "status": 200,
+    "body": {
+      "data": {
+        "config": {
+          "color": "yellow",
+          "device_id": "00000000-0000-4000-8000-000000000001",
+          "has_token": true,
+          "managed": false,
+          "name": "Vehicle_01",
+          "short_name": "V01",
+          "token_hint": "••••0001",
+          "vehicle_id": "Vehicle_01"
+        },
+        "vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "NONE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "IDLE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "waiting",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        }
+      },
+      "message": "Latest vehicle telemetry retrieved.",
+      "success": true
+    }
+  },
+  "vehicle_get_invalid": {
+    "request": "GET /api/vehicles/Vehicle_99",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Vehicle must be one of: Vehicle_01, Vehicle_02.",
+      "success": false
+    }
+  },
+  "fleet": {
+    "request": "GET /api/fleet",
+    "status": 200,
+    "body": {
+      "data": {
+        "count": 2,
+        "removed": [],
+        "vehicles": [
+          {
+            "Apriltag_status": "not_detected",
+            "_thingsboard_error": "No usable telemetry available.",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "yellow",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "NONE",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "IDLE",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_01",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "not_detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "waiting",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_01",
+            "vehicle_online": null
+          },
+          {
+            "Apriltag_status": "not_detected",
+            "_thingsboard_error": "No usable telemetry available.",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "blue",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "NONE",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "IDLE",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_02",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "not_detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "waiting",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_02",
+            "vehicle_online": null
+          }
+        ]
+      },
+      "message": "Fleet data retrieved.",
+      "success": true
+    }
+  },
+  "tb_quota": {
+    "request": "GET /api/thingsboard/quota",
+    "status": 200,
+    "body": {
+      "data": {
+        "quota": {
+          "devices": 2,
+          "max_devices": 5,
+          "remaining": 3
+        }
+      },
+      "message": "Device quota retrieved.",
+      "success": true
+    }
+  },
+  "tb_test": {
+    "request": "GET /api/thingsboard/test",
+    "status": 200,
+    "body": {
+      "success": true,
+      "thingsboard": {
+        "connected": true,
+        "message": "ThingsBoard connection successful."
+      }
+    }
+  },
+  "start_no_vehicle": {
+    "request": "POST /api/start",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Provide vehicle as one of: Vehicle_01, Vehicle_02.",
+      "success": false
+    }
+  },
+  "start_bad_vehicle": {
+    "request": "POST /api/start",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Provide vehicle as one of: Vehicle_01, Vehicle_02.",
+      "success": false
+    }
+  },
+  "start_non_json": {
+    "request": "POST /api/start",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Provide vehicle as one of: Vehicle_01, Vehicle_02.",
+      "success": false
+    }
+  },
+  "load_missing_pct": {
+    "request": "POST /api/loading/update",
+    "status": 400,
+    "body": {
+      "code": "MISSING_PERCENTAGE",
+      "message": "Loading percentage is required.",
+      "success": false
+    }
+  },
+  "load_text_pct": {
+    "request": "POST /api/loading/update",
+    "status": 400,
+    "body": {
+      "code": "INVALID_PERCENTAGE",
+      "message": "Percentage must be numeric.",
+      "success": false
+    }
+  },
+  "load_high_pct": {
+    "request": "POST /api/loading/update",
+    "status": 400,
+    "body": {
+      "code": "INVALID_PERCENTAGE",
+      "message": "Percentage must be between 0 and 100.",
+      "success": false
+    }
+  },
+  "load_start_wrong_stop": {
+    "request": "POST /api/loading/start",
+    "status": 403,
+    "body": {
+      "code": "NOT_AT_LOADING_POINT",
+      "message": "Loading can start only at Stop 2.",
+      "success": false
+    }
+  },
+  "warehouse_wrong_stop": {
+    "request": "POST /api/warehouse",
+    "status": 403,
+    "body": {
+      "code": "INVALID_LOCATION",
+      "message": "Vehicle must be at Stop 2 before moving to warehouse.",
+      "success": false
+    }
+  },
+  "complete_wrong_stop": {
+    "request": "POST /api/complete",
+    "status": 400,
+    "body": {
+      "code": "COMPLETE_FAILED",
+      "message": "Vehicle must be at warehouse.",
+      "success": false
+    }
+  },
+  "cycle_start": {
+    "request": "POST /api/start",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "not_applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "START",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "MOVING_TO_LOADING",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "straight",
+          "motor_rpm": 1800,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 18,
+          "status": "running",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        }
+      },
+      "message": "Vehicle started.",
+      "success": true
+    }
+  },
+  "cycle_loading_point": {
+    "request": "POST /api/loading-point",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_2",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "LOADING_POINT",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_2",
+          "longitude": 0,
+          "mission_status": "AT_LOADING_POINT",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "ready",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        }
+      },
+      "message": "Vehicle reached loading point.",
+      "success": true
+    }
+  },
+  "cycle_load_start": {
+    "request": "POST /api/loading/start",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_2",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "START_LOADING",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "loading",
+          "location": "stop_2",
+          "longitude": 0,
+          "mission_status": "LOADING",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "loading",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        }
+      },
+      "message": "Loading started.",
+      "success": true
+    }
+  },
+  "cycle_load_50": {
+    "request": "POST /api/loading/update",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_2",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "START_LOADING",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 500,
+          "load_percentage": 50,
+          "loading_progress": 50,
+          "loading_status": "loading",
+          "location": "stop_2",
+          "longitude": 0,
+          "mission_status": "LOADING",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "loading",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        }
+      },
+      "message": "Loading updated.",
+      "success": true
+    }
+  },
+  "cycle_load_100": {
+    "request": "POST /api/loading/update",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_2",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "START_LOADING",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 1000,
+          "load_percentage": 100,
+          "loading_progress": 100,
+          "loading_status": "complete",
+          "location": "stop_2",
+          "longitude": 0,
+          "mission_status": "LOADING",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "ready",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        }
+      },
+      "message": "Loading updated.",
+      "success": true
+    }
+  },
+  "cycle_load_start_full": {
+    "request": "POST /api/loading/start",
+    "status": 403,
+    "body": {
+      "code": "LOAD_ALREADY_COMPLETE",
+      "message": "Vehicle is already fully loaded.",
+      "success": false
+    }
+  },
+  "cycle_warehouse": {
+    "request": "POST /api/warehouse",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_3",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "WAREHOUSE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 1000,
+          "load_percentage": 100,
+          "loading_progress": 100,
+          "loading_status": "complete",
+          "location": "stop_3",
+          "longitude": 0,
+          "mission_status": "MOVING_TO_WAREHOUSE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "completed",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        }
+      },
+      "message": "Vehicle reached warehouse.",
+      "success": true
+    }
+  },
+  "cycle_complete": {
+    "request": "POST /api/complete",
+    "status": 200,
+    "body": {
+      "data": {
+        "completed_vehicle": {
+          "Apriltag_status": "not_detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "yellow",
+          "communication_status": null,
+          "current_stop": "stop_3",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "idle",
+          "health_score": 100,
+          "last_command": "COMPLETE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 1000,
+          "load_percentage": 100,
+          "loading_progress": 100,
+          "loading_status": "complete",
+          "location": "stop_3",
+          "longitude": 0,
+          "mission_status": "COMPLETED",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_01",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "completed",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "disconnected",
+          "vehicle_id": "Vehicle_01",
+          "vehicle_online": null
+        },
+        "next_vehicle": {
+          "Apriltag_status": "detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "blue",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "ready",
+          "health_score": 100,
+          "last_command": "NONE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "IDLE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_02",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "ready",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "connected",
+          "vehicle_id": "Vehicle_02",
+          "vehicle_online": null
+        }
+      },
+      "message": "Vehicle_01 completed. Vehicle_02 is ready for the next cycle.",
+      "success": true
+    }
+  },
+  "events": {
+    "request": "GET /api/events?limit=5",
+    "status": 200,
+    "body": {
+      "data": [
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "7A9CFF4E",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 0,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_1",
+                "loadPercentage": 0,
+                "missionStatus": "IDLE",
+                "radar": "clear",
+                "trigger": "NONE"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_02"
+            }
+          },
+          "event_type": "j2735",
+          "id": 27,
+          "message": "[BSM] V02 id=7A9CFF4E msgCnt=0 speed=0.00 m/s trans=park brakes=ON stop=stop_1",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_02"
+        },
+        {
+          "details": {
+            "from_vehicle": "Vehicle_01",
+            "to_vehicle": "Vehicle_02",
+            "v2v_message": {
+              "messageName": "V2V-HANDOVER",
+              "value": {
+                "from": {
+                  "id": "ED60E22C",
+                  "x_vehicle": "Vehicle_01"
+                },
+                "grant": "routeAccess",
+                "secMark": "<volatile>",
+                "to": {
+                  "id": "7A9CFF4E",
+                  "x_vehicle": "Vehicle_02"
+                }
+              },
+              "x_format": "Custom V2V message, not part of SAE J2735 (J2735 has no route-handover message)."
+            }
+          },
+          "event_type": "communication",
+          "id": 26,
+          "message": "[V2V] V01 granted route access to V02",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": null
+        },
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 4,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_3",
+                "loadPercentage": 100,
+                "missionStatus": "COMPLETED",
+                "radar": "clear",
+                "trigger": "COMPLETE"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 25,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=4 speed=0.00 m/s trans=park brakes=ON stop=stop_3 trigger=COMPLETE",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {},
+          "event_type": "event",
+          "id": 24,
+          "message": "[MISSION] V01 Mission Completed Successfully",
+          "severity": "success",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 3,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_3",
+                "loadPercentage": 100,
+                "missionStatus": "MOVING_TO_WAREHOUSE",
+                "radar": "clear",
+                "trigger": "WAREHOUSE"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 23,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=3 speed=0.00 m/s trans=park brakes=ON stop=stop_3 trigger=WAREHOUSE",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        }
+      ],
+      "message": "Events retrieved.",
+      "success": true
+    }
+  },
+  "events_default": {
+    "request": "GET /api/events",
+    "status": 200,
+    "body": {
+      "data": [
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "7A9CFF4E",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 0,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_1",
+                "loadPercentage": 0,
+                "missionStatus": "IDLE",
+                "radar": "clear",
+                "trigger": "NONE"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_02"
+            }
+          },
+          "event_type": "j2735",
+          "id": 27,
+          "message": "[BSM] V02 id=7A9CFF4E msgCnt=0 speed=0.00 m/s trans=park brakes=ON stop=stop_1",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_02"
+        },
+        {
+          "details": {
+            "from_vehicle": "Vehicle_01",
+            "to_vehicle": "Vehicle_02",
+            "v2v_message": {
+              "messageName": "V2V-HANDOVER",
+              "value": {
+                "from": {
+                  "id": "ED60E22C",
+                  "x_vehicle": "Vehicle_01"
+                },
+                "grant": "routeAccess",
+                "secMark": "<volatile>",
+                "to": {
+                  "id": "7A9CFF4E",
+                  "x_vehicle": "Vehicle_02"
+                }
+              },
+              "x_format": "Custom V2V message, not part of SAE J2735 (J2735 has no route-handover message)."
+            }
+          },
+          "event_type": "communication",
+          "id": 26,
+          "message": "[V2V] V01 granted route access to V02",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": null
+        },
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 4,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_3",
+                "loadPercentage": 100,
+                "missionStatus": "COMPLETED",
+                "radar": "clear",
+                "trigger": "COMPLETE"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 25,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=4 speed=0.00 m/s trans=park brakes=ON stop=stop_3 trigger=COMPLETE",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {},
+          "event_type": "event",
+          "id": 24,
+          "message": "[MISSION] V01 Mission Completed Successfully",
+          "severity": "success",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 3,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_3",
+                "loadPercentage": 100,
+                "missionStatus": "MOVING_TO_WAREHOUSE",
+                "radar": "clear",
+                "trigger": "WAREHOUSE"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 23,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=3 speed=0.00 m/s trans=park brakes=ON stop=stop_3 trigger=WAREHOUSE",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {},
+          "event_type": "event",
+          "id": 22,
+          "message": "[EVENT] V01 arrived at Destination Zone",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "new_location": "stop_3",
+            "old_location": "stop_2"
+          },
+          "event_type": "movement",
+          "id": 21,
+          "message": "Vehicle_01 vehicle moved from stop_2 to stop_3.",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "code": "LOAD_ALREADY_COMPLETE"
+          },
+          "event_type": "safety",
+          "id": 20,
+          "message": "Vehicle_01 vehicle command blocked: Vehicle is already fully loaded.",
+          "severity": "warning",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "accepted": false,
+            "command": "START_LOADING",
+            "reason": "Vehicle is already fully loaded."
+          },
+          "event_type": "command",
+          "id": 19,
+          "message": "[CMD] START_LOADING rejected for V01",
+          "severity": "warning",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "load_percent": 100
+          },
+          "event_type": "status",
+          "id": 18,
+          "message": "[EVENT] V01 Cargo Loading Complete",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "load_percent": 100
+          },
+          "event_type": "status",
+          "id": 17,
+          "message": "[STATUS] V01 Cargo Load Progress = 100%",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "load_percent": 50
+          },
+          "event_type": "status",
+          "id": 16,
+          "message": "[STATUS] V01 Cargo Load Progress = 50.0%",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 2,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_2",
+                "loadPercentage": 0,
+                "missionStatus": "LOADING",
+                "radar": "clear",
+                "trigger": "START_LOADING"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 15,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=2 speed=0.00 m/s trans=park brakes=ON stop=stop_2 trigger=START_LOADING",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "accepted": true,
+            "command": "START_LOADING",
+            "reason": null
+          },
+          "event_type": "command",
+          "id": 14,
+          "message": "[CMD] START_LOADING accepted for V01",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {},
+          "event_type": "status",
+          "id": 13,
+          "message": "[STATUS] V01 State Transition → LOADING",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 1,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_2",
+                "loadPercentage": 0,
+                "missionStatus": "AT_LOADING_POINT",
+                "radar": "clear",
+                "trigger": "LOADING_POINT"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 12,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=1 speed=0.00 m/s trans=park brakes=ON stop=stop_2 trigger=LOADING_POINT",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "reason": "Reached loading point"
+          },
+          "event_type": "safety",
+          "id": 11,
+          "message": "[SAFETY] V01 Brake Applied",
+          "severity": "warning",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "new_location": "stop_2",
+            "old_location": "stop_1"
+          },
+          "event_type": "movement",
+          "id": 10,
+          "message": "Vehicle_01 vehicle moved from stop_1 to stop_2.",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": []
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 0,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 250,
+                  "transmission": "forwardGears"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_1",
+                "loadPercentage": 0,
+                "missionStatus": "MOVING_TO_LOADING",
+                "radar": "clear",
+                "trigger": "START"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 9,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=0 speed=5.00 m/s trans=forwardGears brakes=OFF stop=stop_1 trigger=START",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {},
+          "event_type": "safety",
+          "id": 8,
+          "message": "Vehicle_01 vehicle brake released.",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "location": "stop_1"
+          },
+          "event_type": "movement",
+          "id": 7,
+          "message": "V01 started from stop_1.",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "accepted": true,
+            "command": "START",
+            "reason": null
+          },
+          "event_type": "command",
+          "id": 6,
+          "message": "[CMD] START accepted for V01",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "error": "Vehicle must be at warehouse."
+          },
+          "event_type": "error",
+          "id": 5,
+          "message": "Journey completion failed.",
+          "severity": "critical",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "code": "INVALID_LOCATION"
+          },
+          "event_type": "safety",
+          "id": 4,
+          "message": "Vehicle_01 vehicle command blocked: Vehicle must be at Stop 2 before moving to warehouse.",
+          "severity": "warning",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "code": "NOT_AT_LOADING_POINT"
+          },
+          "event_type": "safety",
+          "id": 3,
+          "message": "Vehicle_01 vehicle command blocked: Loading can start only at Stop 2.",
+          "severity": "warning",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "accepted": false,
+            "command": "START_LOADING",
+            "reason": "Loading can start only at Stop 2."
+          },
+          "event_type": "command",
+          "id": 2,
+          "message": "[CMD] START_LOADING rejected for V01",
+          "severity": "warning",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {},
+          "event_type": "system",
+          "id": 1,
+          "message": "Fleet Control backend started.",
+          "severity": "success",
+          "timestamp": "<volatile>",
+          "vehicle": null
+        }
+      ],
+      "message": "Events retrieved.",
+      "success": true
+    }
+  },
+  "events_vehicle": {
+    "request": "GET /api/events/Vehicle_01?limit=3",
+    "status": 200,
+    "body": {
+      "data": [
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 4,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_3",
+                "loadPercentage": 100,
+                "missionStatus": "COMPLETED",
+                "radar": "clear",
+                "trigger": "COMPLETE"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 25,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=4 speed=0.00 m/s trans=park brakes=ON stop=stop_3 trigger=COMPLETE",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {},
+          "event_type": "event",
+          "id": 24,
+          "message": "[MISSION] V01 Mission Completed Successfully",
+          "severity": "success",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        },
+        {
+          "details": {
+            "j2735": {
+              "messageId": 20,
+              "messageName": "BasicSafetyMessage",
+              "value": {
+                "coreData": {
+                  "accelSet": {
+                    "lat": 2001,
+                    "long": 2001,
+                    "vert": -127,
+                    "yaw": 0
+                  },
+                  "accuracy": {
+                    "orientation": 65535,
+                    "semiMajor": 255,
+                    "semiMinor": 255
+                  },
+                  "angle": 127,
+                  "brakes": {
+                    "abs": "unavailable",
+                    "auxBrakes": "unavailable",
+                    "brakeBoost": "unavailable",
+                    "scs": "unavailable",
+                    "traction": "unavailable",
+                    "wheelBrakes": [
+                      "leftFront",
+                      "leftRear",
+                      "rightFront",
+                      "rightRear"
+                    ]
+                  },
+                  "elev": -4096,
+                  "heading": 28800,
+                  "id": "ED60E22C",
+                  "lat": 900000001,
+                  "long": 1800000001,
+                  "msgCnt": 3,
+                  "secMark": "<volatile>",
+                  "size": {
+                    "length": 0,
+                    "width": 0
+                  },
+                  "speed": 0,
+                  "transmission": "park"
+                }
+              },
+              "x_extensions": {
+                "currentStop": "stop_3",
+                "loadPercentage": 100,
+                "missionStatus": "MOVING_TO_WAREHOUSE",
+                "radar": "clear",
+                "trigger": "WAREHOUSE"
+              },
+              "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+              "x_vehicle": "Vehicle_01"
+            }
+          },
+          "event_type": "j2735",
+          "id": 23,
+          "message": "[BSM] V01 id=ED60E22C msgCnt=3 speed=0.00 m/s trans=park brakes=ON stop=stop_3 trigger=WAREHOUSE",
+          "severity": "info",
+          "timestamp": "<volatile>",
+          "vehicle": "Vehicle_01"
+        }
+      ],
+      "message": "Vehicle events retrieved.",
+      "success": true
+    }
+  },
+  "events_bad_vehicle": {
+    "request": "GET /api/events/zzz",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Invalid vehicle.",
+      "success": false
+    }
+  },
+  "bsm_default": {
+    "request": "GET /api/j2735/bsm",
+    "status": 200,
+    "body": {
+      "data": {
+        "messageId": 20,
+        "messageName": "BasicSafetyMessage",
+        "value": {
+          "coreData": {
+            "accelSet": {
+              "lat": 2001,
+              "long": 2001,
+              "vert": -127,
+              "yaw": 0
+            },
+            "accuracy": {
+              "orientation": 65535,
+              "semiMajor": 255,
+              "semiMinor": 255
+            },
+            "angle": 127,
+            "brakes": {
+              "abs": "unavailable",
+              "auxBrakes": "unavailable",
+              "brakeBoost": "unavailable",
+              "scs": "unavailable",
+              "traction": "unavailable",
+              "wheelBrakes": [
+                "leftFront",
+                "leftRear",
+                "rightFront",
+                "rightRear"
+              ]
+            },
+            "elev": -4096,
+            "heading": 28800,
+            "id": "ED60E22C",
+            "lat": 900000001,
+            "long": 1800000001,
+            "msgCnt": 5,
+            "secMark": "<volatile>",
+            "size": {
+              "length": 0,
+              "width": 0
+            },
+            "speed": 0,
+            "transmission": "park"
+          }
+        },
+        "x_extensions": {
+          "currentStop": "stop_3",
+          "loadPercentage": 100,
+          "missionStatus": "COMPLETED",
+          "radar": "clear",
+          "trigger": "COMPLETE"
+        },
+        "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+        "x_vehicle": "Vehicle_01"
+      },
+      "message": "Basic Safety Message generated.",
+      "success": true
+    }
+  },
+  "bsm_alias": {
+    "request": "GET /api/j2735/bsm?vehicle=blue",
+    "status": 200,
+    "body": {
+      "data": {
+        "messageId": 20,
+        "messageName": "BasicSafetyMessage",
+        "value": {
+          "coreData": {
+            "accelSet": {
+              "lat": 2001,
+              "long": 2001,
+              "vert": -127,
+              "yaw": 0
+            },
+            "accuracy": {
+              "orientation": 65535,
+              "semiMajor": 255,
+              "semiMinor": 255
+            },
+            "angle": 127,
+            "brakes": {
+              "abs": "unavailable",
+              "auxBrakes": "unavailable",
+              "brakeBoost": "unavailable",
+              "scs": "unavailable",
+              "traction": "unavailable",
+              "wheelBrakes": [
+                "leftFront",
+                "leftRear",
+                "rightFront",
+                "rightRear"
+              ]
+            },
+            "elev": -4096,
+            "heading": 28800,
+            "id": "7A9CFF4E",
+            "lat": 900000001,
+            "long": 1800000001,
+            "msgCnt": 1,
+            "secMark": "<volatile>",
+            "size": {
+              "length": 0,
+              "width": 0
+            },
+            "speed": 0,
+            "transmission": "park"
+          }
+        },
+        "x_extensions": {
+          "currentStop": "stop_1",
+          "loadPercentage": 0,
+          "missionStatus": "IDLE",
+          "radar": "clear",
+          "trigger": "NONE"
+        },
+        "x_format": "J2735-styled JSON: not UPER-encoded and not sent over V2X. Unknown values use the standard's 'unavailable' codes.",
+        "x_vehicle": "Vehicle_02"
+      },
+      "message": "Basic Safety Message generated.",
+      "success": true
+    }
+  },
+  "bsm_bad": {
+    "request": "GET /api/j2735/bsm?vehicle=zzz",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Provide vehicle as one of: Vehicle_01, Vehicle_02.",
+      "success": false
+    }
+  },
+  "safety": {
+    "request": "GET /api/safety",
+    "status": 200,
+    "body": {
+      "data": {
+        "Vehicle_01": {
+          "braking_status": "applied",
+          "emergency_stop": false,
+          "obstacle_detected": false,
+          "qr_status": "not_detected",
+          "radar_status": "clear",
+          "safe_to_move": true,
+          "vehicle": "Vehicle_01"
+        },
+        "Vehicle_02": {
+          "braking_status": "applied",
+          "emergency_stop": false,
+          "obstacle_detected": false,
+          "qr_status": "detected",
+          "radar_status": "clear",
+          "safe_to_move": true,
+          "vehicle": "Vehicle_02"
+        }
+      },
+      "message": "Safety status retrieved.",
+      "success": true
+    }
+  },
+  "safety_vehicle": {
+    "request": "GET /api/safety/blue",
+    "status": 200,
+    "body": {
+      "data": {
+        "braking_status": "applied",
+        "emergency_stop": false,
+        "obstacle_detected": false,
+        "qr_status": "detected",
+        "radar_status": "clear",
+        "safe_to_move": true,
+        "vehicle": "Vehicle_02"
+      },
+      "message": "Vehicle safety status retrieved.",
+      "success": true
+    }
+  },
+  "safety_bad": {
+    "request": "GET /api/safety/zzz",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Invalid vehicle.",
+      "success": false
+    }
+  },
+  "communication": {
+    "request": "GET /api/communication",
+    "status": 200,
+    "body": {
+      "data": {
+        "connected": true,
+        "message": "Vehicle communication active.",
+        "protocol": "HTTP V2V",
+        "vehicle_statuses": {
+          "Vehicle_01": "connected",
+          "Vehicle_02": "connected"
+        },
+        "vehicles": [
+          "Vehicle_01",
+          "Vehicle_02"
+        ]
+      },
+      "message": "Vehicle communication status.",
+      "success": true
+    }
+  },
+  "radar_obstacle": {
+    "request": "POST /api/sensors/radar",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "blue",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "ready",
+          "health_score": 100,
+          "last_command": "NONE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "IDLE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_02",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": true,
+          "qr_status": "detected",
+          "radar_status": "obstacle",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "ready",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "connected",
+          "vehicle_id": "Vehicle_02",
+          "vehicle_online": null
+        }
+      },
+      "message": "Radar status updated.",
+      "success": true
+    }
+  },
+  "start_blocked_radar": {
+    "request": "POST /api/start",
+    "status": 403,
+    "body": {
+      "code": "RADAR_OBSTACLE",
+      "message": "Vehicle cannot start: radar detected an obstacle.",
+      "success": false
+    }
+  },
+  "radar_clear": {
+    "request": "POST /api/sensors/radar",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "blue",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "ready",
+          "health_score": 100,
+          "last_command": "NONE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "IDLE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_02",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "ready",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "connected",
+          "vehicle_id": "Vehicle_02",
+          "vehicle_online": null
+        }
+      },
+      "message": "Radar status updated.",
+      "success": true
+    }
+  },
+  "radar_no_vehicle": {
+    "request": "POST /api/sensors/radar",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Provide vehicle.",
+      "success": false
+    }
+  },
+  "brake_apply": {
+    "request": "POST /api/sensors/brake",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "applied",
+          "capacity": 1000,
+          "color": "blue",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "ready",
+          "health_score": 100,
+          "last_command": "NONE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "IDLE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_02",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "ready",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "connected",
+          "vehicle_id": "Vehicle_02",
+          "vehicle_online": null
+        }
+      },
+      "message": "Brake state updated.",
+      "success": true
+    }
+  },
+  "brake_release": {
+    "request": "POST /api/sensors/brake",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "not_applied",
+          "capacity": 1000,
+          "color": "blue",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "ready",
+          "health_score": 100,
+          "last_command": "NONE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "IDLE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_02",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "ready",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "connected",
+          "vehicle_id": "Vehicle_02",
+          "vehicle_online": null
+        }
+      },
+      "message": "Brake state updated.",
+      "success": true
+    }
+  },
+  "qr_not_detected": {
+    "request": "POST /api/sensors/qr",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "not_applied",
+          "capacity": 1000,
+          "color": "blue",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "ready",
+          "health_score": 100,
+          "last_command": "NONE",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "IDLE",
+          "mode": "AUTONOMOUS",
+          "motor_direction": "stopped",
+          "motor_rpm": 0,
+          "name": "Vehicle_02",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 0,
+          "status": "ready",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "connected",
+          "vehicle_id": "Vehicle_02",
+          "vehicle_online": null
+        }
+      },
+      "message": "QR status updated.",
+      "success": true
+    }
+  },
+  "qr_no_vehicle": {
+    "request": "POST /api/sensors/qr",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Provide vehicle.",
+      "success": false
+    }
+  },
+  "manual_bad_cmd": {
+    "request": "POST /api/manual-control",
+    "status": 400,
+    "body": {
+      "code": "INVALID_COMMAND",
+      "message": "Invalid command.",
+      "success": false
+    }
+  },
+  "manual_forward": {
+    "request": "POST /api/manual-control",
+    "status": 200,
+    "body": {
+      "data": {
+        "vehicle": {
+          "Apriltag_status": "detected",
+          "battery_level": null,
+          "battery_percentage": 100,
+          "braking_status": "not_applied",
+          "capacity": 1000,
+          "color": "blue",
+          "communication_status": null,
+          "current_stop": "stop_1",
+          "destination": null,
+          "distance_to_destination": null,
+          "emergency_stop": false,
+          "handover_status": "ready",
+          "health_score": 100,
+          "last_command": "FORWARD",
+          "last_seen": null,
+          "latitude": 0,
+          "load": 0,
+          "load_percentage": 0,
+          "loading_progress": 0,
+          "loading_status": "idle",
+          "location": "stop_1",
+          "longitude": 0,
+          "mission_status": "MANUAL_CONTROL",
+          "mode": "MANUAL",
+          "motor_direction": "forward",
+          "motor_rpm": 0,
+          "name": "Vehicle_02",
+          "network_signal": 100,
+          "next_action": null,
+          "obstacle_detected": false,
+          "qr_status": "detected",
+          "radar_status": "clear",
+          "signal_strength": null,
+          "speed": 15,
+          "status": "running",
+          "temperature": 30,
+          "test_field": "ABHINAV",
+          "v2v_status": "connected",
+          "vehicle_id": "Vehicle_02",
+          "vehicle_online": null
+        }
+      },
+      "message": "FORWARD command executed.",
+      "success": true
+    }
+  },
+  "manual_no_vehicle": {
+    "request": "POST /api/manual-control",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Provide vehicle as one of: Vehicle_01, Vehicle_02.",
+      "success": false
+    }
+  },
+  "estop": {
+    "request": "POST /api/emergency-stop",
+    "status": 200,
+    "body": {
+      "data": {
+        "failed": {},
+        "hardware": {
+          "emergency_stop": true,
+          "source": "simulation",
+          "success": true
+        },
+        "thingsboard": {
+          "Vehicle_01": {
+            "fake": true,
+            "success": true
+          },
+          "Vehicle_02": {
+            "fake": true,
+            "success": true
+          }
+        },
+        "thingsboard_failed": [],
+        "vehicles": {
+          "Vehicle_01": {
+            "Apriltag_status": "not_detected",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "yellow",
+            "communication_status": null,
+            "current_stop": "stop_3",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": true,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "EMERGENCY_STOP",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 1000,
+            "load_percentage": 100,
+            "loading_progress": 100,
+            "loading_status": "complete",
+            "location": "stop_3",
+            "longitude": 0,
+            "mission_status": "EMERGENCY",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_01",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "not_detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "emergency_stop",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_01",
+            "vehicle_online": null
+          },
+          "Vehicle_02": {
+            "Apriltag_status": "detected",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "blue",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": true,
+            "handover_status": "ready",
+            "health_score": 100,
+            "last_command": "EMERGENCY_STOP",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "EMERGENCY",
+            "mode": "MANUAL",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_02",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "emergency_stop",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "connected",
+            "vehicle_id": "Vehicle_02",
+            "vehicle_online": null
+          }
+        }
+      },
+      "message": "Fleet emergency stop activated.",
+      "success": true
+    }
+  },
+  "start_blocked_estop": {
+    "request": "POST /api/start",
+    "status": 403,
+    "body": {
+      "code": "EMERGENCY_STOP_ACTIVE",
+      "message": "Vehicle is under emergency stop.",
+      "success": false
+    }
+  },
+  "manual_blocked_estop": {
+    "request": "POST /api/manual-control",
+    "status": 403,
+    "body": {
+      "code": "EMERGENCY_STOP_ACTIVE",
+      "message": "Emergency stop active.",
+      "success": false
+    }
+  },
+  "release_bad": {
+    "request": "POST /api/emergency-release",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE",
+      "message": "Provide vehicle as one of: Vehicle_01, Vehicle_02.",
+      "success": false
+    }
+  },
+  "release_one": {
+    "request": "POST /api/emergency-release",
+    "status": 200,
+    "body": {
+      "data": {
+        "hardware": null,
+        "still_stopped": [
+          "Vehicle_02"
+        ],
+        "thingsboard": {
+          "Vehicle_01": {
+            "fake": true,
+            "success": true
+          }
+        },
+        "thingsboard_failed": [],
+        "vehicles": {
+          "Vehicle_01": {
+            "Apriltag_status": "not_detected",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "yellow",
+            "communication_status": null,
+            "current_stop": "stop_3",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "EMERGENCY_STOP",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 1000,
+            "load_percentage": 100,
+            "loading_progress": 100,
+            "loading_status": "complete",
+            "location": "stop_3",
+            "longitude": 0,
+            "mission_status": "EMERGENCY",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_01",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "not_detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "ready",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_01",
+            "vehicle_online": null
+          }
+        }
+      },
+      "message": "Emergency stop released for Vehicle_01. Vehicles remain stopped with brakes applied.",
+      "success": true
+    }
+  },
+  "release_fleet": {
+    "request": "POST /api/emergency-release",
+    "status": 200,
+    "body": {
+      "data": {
+        "hardware": {
+          "emergency_stop": false,
+          "source": "simulation",
+          "success": true
+        },
+        "still_stopped": [],
+        "thingsboard": {
+          "Vehicle_02": {
+            "fake": true,
+            "success": true
+          }
+        },
+        "thingsboard_failed": [],
+        "vehicles": {
+          "Vehicle_02": {
+            "Apriltag_status": "detected",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "blue",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "ready",
+            "health_score": 100,
+            "last_command": "EMERGENCY_STOP",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "EMERGENCY",
+            "mode": "MANUAL",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_02",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "ready",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "connected",
+            "vehicle_id": "Vehicle_02",
+            "vehicle_online": null
+          }
+        }
+      },
+      "message": "Emergency stop released for Vehicle_02. Vehicles remain stopped with brakes applied.",
+      "success": true
+    }
+  },
+  "release_nothing": {
+    "request": "POST /api/emergency-release",
+    "status": 200,
+    "body": {
+      "data": {
+        "hardware": {
+          "emergency_stop": false,
+          "source": "simulation",
+          "success": true
+        },
+        "still_stopped": [],
+        "thingsboard": {},
+        "thingsboard_failed": [],
+        "vehicles": {}
+      },
+      "message": "No vehicle was emergency-stopped.",
+      "success": true
+    }
+  },
+  "reset": {
+    "request": "POST /api/reset",
+    "status": 200,
+    "body": {
+      "data": {
+        "hardware": {
+          "emergency_stop": false,
+          "source": "simulation",
+          "success": true
+        },
+        "thingsboard": {
+          "Vehicle_01": {
+            "fake": true,
+            "success": true
+          },
+          "Vehicle_02": {
+            "fake": true,
+            "success": true
+          }
+        },
+        "thingsboard_failed": [],
+        "vehicles": {
+          "Vehicle_01": {
+            "Apriltag_status": "detected",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "yellow",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "NONE",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "IDLE",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_01",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "waiting",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_01",
+            "vehicle_online": null
+          },
+          "Vehicle_02": {
+            "Apriltag_status": "detected",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "blue",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "NONE",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "IDLE",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_02",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "waiting",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_02",
+            "vehicle_online": null
+          }
+        }
+      },
+      "message": "Fleet cycle reset.",
+      "success": true
+    }
+  },
+  "tb_sync": {
+    "request": "POST /api/thingsboard/sync",
+    "status": 200,
+    "body": {
+      "data": {
+        "Vehicle_01": {
+          "fake": true,
+          "success": true
+        },
+        "Vehicle_02": {
+          "fake": true,
+          "success": true
+        }
+      },
+      "message": "Vehicle state synchronized with ThingsBoard.",
+      "success": true
+    }
+  },
+  "servo_ok": {
+    "request": "POST /api/servo",
+    "status": 200,
+    "body": {
+      "angle": 90,
+      "success": true
+    }
+  },
+  "servo_out_of_range": {
+    "request": "POST /api/servo",
+    "status": 500,
+    "body": {
+      "message": "Internal server error.",
+      "success": false
+    }
+  },
+  "vehicle_command": {
+    "request": "POST /api/vehicle/command",
+    "status": 200,
+    "body": {
+      "command": "PING",
+      "success": true
+    }
+  },
+  "add_remote_denied": {
+    "request": "POST /api/vehicles",
+    "status": 403,
+    "body": {
+      "code": "REMOTE_ADMIN_DISABLED",
+      "message": "Vehicle management is only allowed from the computer running the backend. Set ALLOW_REMOTE_FLEET_ADMIN=true to allow it from the network.",
+      "success": false
+    }
+  },
+  "put_remote_denied": {
+    "request": "PUT /api/vehicles/Vehicle_01",
+    "status": 403,
+    "body": {
+      "code": "REMOTE_ADMIN_DISABLED",
+      "message": "Vehicle management is only allowed from the computer running the backend. Set ALLOW_REMOTE_FLEET_ADMIN=true to allow it from the network.",
+      "success": false
+    }
+  },
+  "delete_remote_denied": {
+    "request": "DELETE /api/vehicles/Vehicle_01",
+    "status": 403,
+    "body": {
+      "code": "REMOTE_ADMIN_DISABLED",
+      "message": "Vehicle management is only allowed from the computer running the backend. Set ALLOW_REMOTE_FLEET_ADMIN=true to allow it from the network.",
+      "success": false
+    }
+  },
+  "add_bad_mode": {
+    "request": "POST /api/vehicles",
+    "status": 400,
+    "body": {
+      "code": "INVALID_MODE",
+      "message": "mode must be 'auto' or 'link'.",
+      "success": false
+    }
+  },
+  "add_bad_name": {
+    "request": "POST /api/vehicles",
+    "status": 400,
+    "body": {
+      "code": "INVALID_VEHICLE_NAME",
+      "message": "Vehicle name must be 1-40 characters: letters, digits, '_' or '-', starting with a letter.",
+      "success": false
+    }
+  },
+  "add_link": {
+    "request": "POST /api/vehicles",
+    "status": 201,
+    "body": {
+      "data": {
+        "mode": "link",
+        "vehicle": {
+          "color": "green",
+          "device_id": "00000000-0000-4000-8000-000000000003",
+          "has_token": true,
+          "managed": false,
+          "name": "Vehicle_03",
+          "short_name": "V03",
+          "token_hint": "••••0003",
+          "vehicle_id": "Vehicle_03"
+        }
+      },
+      "message": "Vehicle_03 added to the fleet.",
+      "success": true
+    }
+  },
+  "add_link_duplicate": {
+    "request": "POST /api/vehicles",
+    "status": 409,
+    "body": {
+      "code": "DUPLICATE_VEHICLE",
+      "message": "A vehicle named Vehicle_03 already exists.",
+      "success": false
+    }
+  },
+  "add_link_missing_token": {
+    "request": "POST /api/vehicles",
+    "status": 400,
+    "body": {
+      "code": "MISSING_TOKEN",
+      "message": "ThingsBoard access token is required.",
+      "success": false
+    }
+  },
+  "fleet_three": {
+    "request": "GET /api/fleet",
+    "status": 200,
+    "body": {
+      "data": {
+        "count": 3,
+        "removed": [],
+        "vehicles": [
+          {
+            "Apriltag_status": "detected",
+            "_thingsboard_error": "No usable telemetry available.",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "yellow",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "NONE",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "IDLE",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_01",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "waiting",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_01",
+            "vehicle_online": null
+          },
+          {
+            "Apriltag_status": "detected",
+            "_thingsboard_error": "No usable telemetry available.",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "blue",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "NONE",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "IDLE",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_02",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "waiting",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_02",
+            "vehicle_online": null
+          },
+          {
+            "Apriltag_status": "not_detected",
+            "_thingsboard_error": "No usable telemetry available.",
+            "battery_level": null,
+            "battery_percentage": 100,
+            "braking_status": "applied",
+            "capacity": 1000,
+            "color": "green",
+            "communication_status": null,
+            "current_stop": "stop_1",
+            "destination": null,
+            "distance_to_destination": null,
+            "emergency_stop": false,
+            "handover_status": "idle",
+            "health_score": 100,
+            "last_command": "NONE",
+            "last_seen": null,
+            "latitude": 0,
+            "load": 0,
+            "load_percentage": 0,
+            "loading_progress": 0,
+            "loading_status": "idle",
+            "location": "stop_1",
+            "longitude": 0,
+            "mission_status": "IDLE",
+            "mode": "AUTONOMOUS",
+            "motor_direction": "stopped",
+            "motor_rpm": 0,
+            "name": "Vehicle_03",
+            "network_signal": 100,
+            "next_action": null,
+            "obstacle_detected": false,
+            "qr_status": "not_detected",
+            "radar_status": "clear",
+            "signal_strength": null,
+            "speed": 0,
+            "status": "waiting",
+            "temperature": 30,
+            "test_field": "ABHINAV",
+            "v2v_status": "disconnected",
+            "vehicle_id": "Vehicle_03",
+            "vehicle_online": null
+          }
+        ]
+      },
+      "message": "Fleet data retrieved.",
+      "success": true
+    }
+  },
+  "put_color": {
+    "request": "PUT /api/vehicles/Vehicle_03",
+    "status": 200,
+    "body": {
+      "data": {
+        "previous_name": "Vehicle_03",
+        "vehicle": {
+          "color": "red",
+          "device_id": "00000000-0000-4000-8000-000000000003",
+          "has_token": true,
+          "managed": false,
+          "name": "Vehicle_03",
+          "short_name": "V03",
+          "token_hint": "••••0003",
+          "vehicle_id": "Vehicle_03"
+        }
+      },
+      "message": "Vehicle_03 updated.",
+      "success": true
+    }
+  },
+  "put_rename": {
+    "request": "PUT /api/vehicles/Vehicle_03",
+    "status": 200,
+    "body": {
+      "data": {
+        "previous_name": "Vehicle_03",
+        "vehicle": {
+          "color": "red",
+          "device_id": "00000000-0000-4000-8000-000000000003",
+          "has_token": true,
+          "managed": false,
+          "name": "Truck_03",
+          "short_name": "V03",
+          "token_hint": "••••0003",
+          "vehicle_id": "Truck_03"
+        }
+      },
+      "message": "Truck_03 updated.",
+      "success": true
+    }
+  },
+  "put_not_found": {
+    "request": "PUT /api/vehicles/Nope",
+    "status": 404,
+    "body": {
+      "code": "VEHICLE_NOT_FOUND",
+      "message": "Vehicle Nope not found.",
+      "success": false
+    }
+  },
+  "delete_linked_device_refused": {
+    "request": "DELETE /api/vehicles/Truck_03?delete_device=true",
+    "status": 400,
+    "body": {
+      "code": "DEVICE_NOT_MANAGED",
+      "message": "Truck_03 is linked to a device that was not created by this dashboard, so it is not deleted in ThingsBoard. Remove it from the dashboard only.",
+      "success": false
+    }
+  },
+  "delete_linked": {
+    "request": "DELETE /api/vehicles/Truck_03",
+    "status": 200,
+    "body": {
+      "data": {
+        "device_deleted": false,
+        "vehicle": {
+          "color": "red",
+          "device_id": "00000000-0000-4000-8000-000000000003",
+          "has_token": true,
+          "managed": false,
+          "name": "Truck_03",
+          "short_name": "V03",
+          "token_hint": "••••0003",
+          "vehicle_id": "Truck_03"
+        }
+      },
+      "message": "Truck_03 removed from the fleet.",
+      "success": true
+    }
+  },
+  "delete_not_found": {
+    "request": "DELETE /api/vehicles/Truck_03",
+    "status": 404,
+    "body": {
+      "code": "VEHICLE_NOT_FOUND",
+      "message": "Vehicle Truck_03 not found.",
+      "success": false
+    }
+  },
+  "add_auto": {
+    "request": "POST /api/vehicles",
+    "status": 201,
+    "body": {
+      "data": {
+        "mode": "auto",
+        "vehicle": {
+          "color": "#ff8800",
+          "device_id": "00000000-0000-4000-8000-000000000101",
+          "has_token": true,
+          "managed": true,
+          "name": "Vehicle_04",
+          "short_name": "V04",
+          "token_hint": "••••0101",
+          "vehicle_id": "Vehicle_04"
+        }
+      },
+      "message": "Vehicle_04 added. ThingsBoard device created automatically.",
+      "success": true
+    }
+  },
+  "delete_auto_with_device": {
+    "request": "DELETE /api/vehicles/Vehicle_04?delete_device=yes",
+    "status": 200,
+    "body": {
+      "data": {
+        "device_deleted": true,
+        "vehicle": {
+          "color": "#ff8800",
+          "device_id": "00000000-0000-4000-8000-000000000101",
+          "has_token": true,
+          "managed": true,
+          "name": "Vehicle_04",
+          "short_name": "V04",
+          "token_hint": "••••0101",
+          "vehicle_id": "Vehicle_04"
+        }
+      },
+      "message": "Vehicle_04 removed from the fleet and its ThingsBoard device was deleted.",
+      "success": true
+    }
+  },
+  "vehicles_after": {
+    "request": "GET /api/vehicles",
+    "status": 200,
+    "body": {
+      "data": {
+        "count": 2,
+        "problems": [],
+        "vehicles": [
+          {
+            "color": "yellow",
+            "device_id": "00000000-0000-4000-8000-000000000001",
+            "has_token": true,
+            "managed": false,
+            "name": "Vehicle_01",
+            "short_name": "V01",
+            "token_hint": "••••0001",
+            "vehicle_id": "Vehicle_01"
+          },
+          {
+            "color": "blue",
+            "device_id": "00000000-0000-4000-8000-000000000002",
+            "has_token": true,
+            "managed": false,
+            "name": "Vehicle_02",
+            "short_name": "V02",
+            "token_hint": "••••0002",
+            "vehicle_id": "Vehicle_02"
+          }
+        ]
+      },
+      "message": "Registered vehicles retrieved.",
+      "success": true
+    }
+  },
+  "events_clear": {
+    "request": "POST /api/events/clear",
+    "status": 200,
+    "body": {
+      "message": "Events cleared.",
+      "success": true
+    }
+  },
+  "events_after_clear": {
+    "request": "GET /api/events?limit=3",
+    "status": 200,
+    "body": {
+      "data": [],
+      "message": "Events retrieved.",
+      "success": true
+    }
+  }
+}

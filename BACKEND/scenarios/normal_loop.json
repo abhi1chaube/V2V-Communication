@@ -1,0 +1,14 @@
+{
+  "title": "Normal 3-vehicle loop",
+  "description": "The original process, now driven by the backend: one vehicle runs a cycle at a time (Stop 1 -> load at Stop 2 -> unload at Stop 3), hands the next cycle over to the next vehicle with the V2V handover negotiation, then drives the return leg back to Stop 1.",
+  "seed": 1234,
+  "min_vehicles": 3,
+  "duration_s": 420,
+  "setup": {
+    "dispatch": "handover",
+    "autopilot": "fleet"
+  },
+  "timeline": [
+    {"t": 0, "action": "note", "text": "Three vehicles at Stop 1; Vehicle #1 starts the first cycle."}
+  ]
+}

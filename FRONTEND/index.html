@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Interactive V2V fleet coordination demo with simulated vehicles, live routes, safety alerts, and vehicle-to-vehicle messaging."
+    >
+
+    <meta name="theme-color" content="#f8fafc">
+
+    <title>V2V Fleet Control | Interactive Demo</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="header-content">
+
+            <p class="eyebrow">
+                IOT FLEET CONTROL SYSTEM
+            </p>
+
+            <h1>
+                Vehicle Fleet Dashboard
+            </h1>
+
+            <p class="subtitle">
+                Interactive fleet coordination and vehicle-to-vehicle simulation
+            </p>
+
+            <p class="demo-notice">
+                Public portfolio demo · Simulated vehicles only · Commands affect demo data
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <div
+                id="systemStatus"
+                class="system-status online"
+            >
+
+                <span class="status-dot"></span>
+
+                <span id="systemStatusText">
+                    SYSTEM ONLINE
+                </span>
+
+            </div>
+
+
+            <a
+                class="thingsboard-dashboard-button"
+                href="#vehicleManager"
+            >
+                <span aria-hidden="true">⚙</span>
+                Vehicle Manager
+            </a>
+
+
+            <span class="demo-mode-pill">SIMULATION MODE</span>
+
+        </div>
+
+    </header>
+
+
+
+    <main>
+
+
+        <!-- =====================================================
+             FLEET OVERVIEW + ALERTS
+        ====================================================== -->
+
+        <section class="fleet-summary-grid">
+
+
+            <article class="panel fleet-overview-panel">
+
+                <div class="panel-title-row">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            FLEET OVERVIEW
+                        </p>
+
+                        <h2>
+                            Fleet Summary
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="overview-grid">
+
+                    <div class="overview-tile">
+                        <span class="info-label">TOTAL VEHICLES</span>
+                        <strong data-stat="total">0</strong>
+                    </div>
+
+                    <div class="overview-tile">
+                        <span class="info-label">ONLINE</span>
+                        <strong data-stat="online" class="health-good">0</strong>
+                    </div>
+
+                    <div class="overview-tile">
+                        <span class="info-label">OFFLINE</span>
+                        <strong data-stat="offline" class="health-bad">0</strong>
+                    </div>
+
+                    <div class="overview-tile">
+                        <span class="info-label">ACTIVE MISSIONS</span>
+                        <strong data-stat="active">0</strong>
+                    </div>
+
+                    <div class="overview-tile">
+                        <span class="info-label">COMPLETED MISSIONS</span>
+                        <strong data-stat="completed">0</strong>
+                    </div>
+
+                    <div class="overview-tile">
+                        <span class="info-label">EMERGENCY ALERTS</span>
+                        <strong data-stat="emergency" class="health-bad">0</strong>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article class="panel alerts-panel">
+
+                <div class="panel-title-row">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            FLEET ALERTS
+                        </p>
+
+                        <h2>
+                            Alerts
+                        </h2>
+
+                    </div>
+
+                    <span
+                        id="alertCount"
+                        class="alert-count"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="alertList"
+                    class="alert-list"
+                    aria-live="polite"
+                >
+                    <p class="alert-empty">
+                        No active alerts.
+                    </p>
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SEARCH + FILTERS
+        ====================================================== -->
+
+        <section
+            class="panel fleet-toolbar"
+            aria-label="Search and filter vehicles"
+        >
+
+            <label class="fleet-search">
+
+                <span class="info-label">
+                    SEARCH VEHICLE
+                </span>
+
+                <input
+                    id="vehicleSearch"
+                    type="search"
+                    placeholder="e.g. Vehicle_15 or 15"
+                    autocomplete="off"
+                >
+
+            </label>
+
+
+            <div
+                id="fleetFilters"
+                class="fleet-filters"
+                role="group"
+                aria-label="Filter vehicles"
+            ></div>
+
+
+            <button
+                class="control-button primary toolbar-add-button"
+                type="button"
+                data-action="add-vehicle"
+            >
+                ＋ ADD NEW VEHICLE
+            </button>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             VEHICLE DASHBOARD
+             Cards are generated from #vehicleCardTemplate.
+        ====================================================== -->
+
+        <section
+            id="vehicleGrid"
+            class="vehicle-dashboard"
+            aria-label="Vehicles"
+        >
+
+            <p
+                id="vehicleEmpty"
+                class="vehicle-empty"
+            >
+                Waiting for fleet data...
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             LIVE ROUTE
+        ====================================================== -->
+
+        <section class="panel live-route-panel">
+
+
+            <div class="panel-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        LIVE ROUTE
+                    </p>
+
+                    <h2>
+                        Vehicle Movement
+                    </h2>
+
+                    <p class="panel-subtitle">
+                        Start Point → Loading Point → Warehouse
+                    </p>
+
+                </div>
+
+
+                <div class="live-indicator">
+
+                    <span></span>
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+
+            <!-- ROUTE
+                 Road vehicles are generated from #roadVehicleTemplate. -->
+
+            <div
+                id="routeMap"
+                class="route-map"
+            >
+
+
+                <!-- ROAD -->
+
+                <div class="road">
+
+                    <div class="road-line"></div>
+
+                </div>
+
+
+                <!-- ROUTE STOPS -->
+
+                <div
+                    class="route-stop"
+                    data-position="start"
+                    style="left: 8%;"
+                >
+
+                    <div class="april-tag" aria-label="AprilTag start marker"></div>
+                    <div class="april-tag-label">APRILTAG</div>
+
+                    <div class="stop-marker active">
+                        <span></span>
+                    </div>
+
+                    <div class="stop-label">
+
+                        <strong>
+                            START
+                        </strong>
+
+                        <small>
+                            Stop 1
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="route-stop"
+                    data-position="loading"
+                    style="left: 50%;"
+                >
+
+                    <div class="april-tag" aria-label="AprilTag loading marker"></div>
+                    <div class="april-tag-label">APRILTAG</div>
+
+                    <div class="stop-marker">
+                        <span></span>
+                    </div>
+
+                    <div class="stop-label">
+
+                        <strong>
+                            LOADING POINT
+                        </strong>
+
+                        <small>
+                            Stop 2
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="route-stop"
+                    data-position="warehouse"
+                    style="left: 92%;"
+                >
+
+                    <div class="april-tag" aria-label="AprilTag warehouse marker"></div>
+                    <div class="april-tag-label">APRILTAG</div>
+
+                    <div class="stop-marker warehouse">
+                        <span></span>
+                    </div>
+
+                    <div class="stop-label">
+
+                        <strong>
+                            WAREHOUSE
+                        </strong>
+
+                        <small>
+                            Stop 3
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             RADAR + SENSOR HEALTH
+        ====================================================== -->
+
+        <section class="monitoring-grid">
+
+
+            <!-- RADAR -->
+
+            <article class="panel radar-panel">
+
+                <div class="panel-title-row">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            SAFETY SYSTEM
+                        </p>
+
+                        <h2>
+                            Radar Detection
+                        </h2>
+
+                    </div>
+
+                    <div
+                        id="radarLight"
+                        class="radar-light green"
+                    ></div>
+
+                </div>
+
+
+                <div class="radar-display">
+
+                    <div class="radar-circle">
+
+                        <div class="radar-sweep"></div>
+
+                        <div
+                            id="radarObstacle"
+                            class="radar-obstacle"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="radar-status">
+
+                        <strong id="radarStatus">
+                            CLEAR
+                        </strong>
+
+                        <span id="radarMessage">
+                            No obstacle detected
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- SENSOR HEALTH -->
+
+            <article class="panel sensor-panel">
+
+                <div class="panel-title-row">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            SYSTEM MONITORING
+                        </p>
+
+                        <h2>
+                            Sensor Health
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sensor-list">
+
+
+                    <div class="sensor-row">
+
+                        <span>
+                            Radar-Sensor
+                        </span>
+
+                        <strong
+                            id="radarSensorHealth"
+                            class="health-good"
+                        >
+                            ONLINE
+                        </strong>
+
+                    </div>
+
+
+                    <div class="sensor-row">
+
+                        <span>
+                            Vehicle Communication
+                        </span>
+
+                        <strong
+                            id="communicationHealth"
+                            class="health-good"
+                        >
+                            CONNECTED
+                        </strong>
+
+                    </div>
+
+
+                    <div class="sensor-row">
+
+                        <span>
+                            ThingsBoard Cloud
+                        </span>
+
+                        <strong
+                            id="cloudHealth"
+                            class="health-good"
+                        >
+                            CONNECTED
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             VEHICLE DETAIL + FLEET TABLE
+        ====================================================== -->
+
+        <section class="fleet-detail-grid">
+
+
+            <article class="panel vehicle-detail-panel">
+
+                <div class="panel-title-row">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            VEHICLE DETAIL
+                        </p>
+
+                        <h2 id="detailTitle">
+                            Select a vehicle
+                        </h2>
+
+                    </div>
+
+
+                    <label class="vehicle-select">
+
+                        <span class="visually-hidden">
+                            Select vehicle
+                        </span>
+
+                        <select id="vehicleSelect"></select>
+
+                    </label>
+
+                </div>
+
+
+                <div
+                    id="vehicleDetail"
+                    class="detail-grid"
+                >
+
+                    <div class="info-box">
+                        <span class="info-label">STATUS</span>
+                        <strong data-detail="vehicle_status">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">MISSION STATUS</span>
+                        <strong data-detail="mission_status">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">NEXT ACTION</span>
+                        <strong data-detail="next_action">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">BATTERY</span>
+                        <strong data-detail="battery_level">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">SPEED</span>
+                        <strong data-detail="speed">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">LOCATION</span>
+                        <strong data-detail="location">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">DESTINATION</span>
+                        <strong data-detail="destination">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">DISTANCE TO DESTINATION</span>
+                        <strong data-detail="distance_to_destination">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">COMMUNICATION</span>
+                        <strong data-detail="communication_status">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">LAST SEEN</span>
+                        <strong data-detail="last_seen">—</strong>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">SIGNAL STRENGTH</span>
+                        <strong data-detail="signal_strength">—</strong>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="panel fleet-table-panel">
+
+                <div class="panel-title-row">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            FLEET TABLE
+                        </p>
+
+                        <h2>
+                            All Vehicles
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-scroll">
+
+                    <table class="fleet-table">
+
+                        <thead>
+
+                            <tr>
+                                <th scope="col">Vehicle</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Mission</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Load</th>
+                                <th scope="col">Speed</th>
+                                <th scope="col">Comms</th>
+                                <th scope="col">Online</th>
+                                <th scope="col"><span class="visually-hidden">Actions</span></th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="fleetTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONTROL PANEL
+        ====================================================== -->
+
+        <section class="panel control-panel">
+
+
+            <div class="panel-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        VEHICLE CONTROL
+                    </p>
+
+                    <h2>
+                        Fleet Commands
+                    </h2>
+
+                    <p class="panel-subtitle">
+                        Commands are validated by vehicle state and safety conditions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="control-buttons">
+
+
+                <button
+                    id="startButton"
+                    class="control-button primary"
+                    type="button"
+                >
+                    ▶ START / RESUME
+                </button>
+
+
+                <button
+                    id="loadingButton"
+                    class="control-button loading-button"
+                    type="button"
+                    disabled
+                >
+                    📦 START LOADING
+                </button>
+
+
+                <button
+                    id="resetButton"
+                    class="control-button secondary"
+                    type="button"
+                >
+                    ↻ RESET CYCLE
+                </button>
+
+
+                <button
+                    id="emergencyButton"
+                    class="control-button emergency"
+                    type="button"
+                >
+                    🛑 EMERGENCY STOP
+                </button>
+
+
+                <!-- Shown by script.js only while an emergency stop is active. -->
+                <button
+                    id="releaseButton"
+                    class="control-button release"
+                    type="button"
+                    hidden
+                >
+                    ✅ RELEASE EMERGENCY
+                </button>
+
+            </div>
+
+
+            <div
+                id="commandStatus"
+                class="command-status"
+                role="status"
+                aria-live="polite"
+            >
+                System ready for commands.
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ACTIVITY LOG
+        ====================================================== -->
+
+        <section class="panel activity-panel">
+
+
+            <div class="panel-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        SYSTEM EVENTS
+                    </p>
+
+                    <h2>
+                        Activity Log
+                    </h2>
+
+                </div>
+
+
+                <span class="event-count">
+                    LIVE
+                </span>
+
+            </div>
+
+
+            <div
+                id="activityLog"
+                class="activity-log"
+            >
+
+                <div class="log-entry">
+
+                    <span class="log-time">
+                        --:--:--
+                    </span>
+
+                    <span class="log-message">
+                        Waiting for backend connection...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             VEHICLE COMMUNICATION
+        ====================================================== -->
+
+        <section class="communication-card">
+
+
+            <div class="communication-icon">
+                ↔
+            </div>
+
+
+            <div class="communication-content">
+
+                <p class="eyebrow">
+                    V2V COMMUNICATION
+                </p>
+
+                <h3>
+                    Vehicle-to-Vehicle Communication
+                </h3>
+
+                <p>
+                    Vehicle load, position and operational state are shared
+                    between connected vehicles in real time.
+                </p>
+
+            </div>
+
+
+            <div
+                id="communicationStatus"
+                class="communication-status"
+            >
+
+                <span></span>
+
+                <span id="communicationStatusText">
+                    CONNECTING...
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             VEHICLE MANAGER
+             Rows are generated by vehicle-manager.js from
+             GET /api/vehicles (BACKEND/data/vehicles.json).
+        ====================================================== -->
+
+        <section
+            id="vehicleManager"
+            class="panel vehicle-manager-panel"
+            aria-labelledby="vehicleManagerTitle"
+        >
+
+
+            <div class="panel-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        FLEET CONFIGURATION
+                    </p>
+
+                    <h2 id="vehicleManagerTitle">
+                        Vehicle Manager
+                    </h2>
+
+                    <p class="panel-subtitle">
+                        Add a vehicle with just a name: its ThingsBoard device is
+                        created automatically. Changes are saved to
+                        data/vehicles.json and appear on the dashboard immediately.
+                        You can also remove a vehicle with ✕ on its card. Vehicles whose
+                        device is deleted in ThingsBoard are removed automatically.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="control-button primary"
+                    type="button"
+                    data-action="add-vehicle"
+                >
+                    ＋ ADD NEW VEHICLE
+                </button>
+
+            </div>
+
+
+            <div class="manager-toolbar">
+
+                <label class="fleet-search">
+
+                    <span class="info-label">
+                        SEARCH VEHICLE
+                    </span>
+
+                    <input
+                        id="managerSearch"
+                        type="search"
+                        placeholder="Name or device ID"
+                        autocomplete="off"
+                    >
+
+                </label>
+
+
+                <div class="manager-counts">
+
+                    <span
+                        id="managerQuota"
+                        class="manager-count"
+                        hidden
+                    ></span>
+
+                    <span
+                        id="managerCount"
+                        class="manager-count"
+                    >
+                        0 vehicles
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="managerStatus"
+                class="command-status"
+                role="status"
+                aria-live="polite"
+            >
+                Loading vehicles...
+            </div>
+
+
+            <div class="table-scroll manager-table-scroll">
+
+                <table class="fleet-table manager-table">
+
+                    <thead>
+
+                        <tr>
+                            <th scope="col">Vehicle Name</th>
+                            <th scope="col">ThingsBoard Device ID</th>
+                            <th scope="col">Token</th>
+                            <th scope="col">Colour</th>
+                            <th scope="col">ThingsBoard Device</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="managerTableBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         ADD / EDIT VEHICLE DIALOG
+    ====================================================== -->
+
+    <dialog
+        id="vehicleDialog"
+        class="vehicle-dialog"
+        aria-labelledby="vehicleDialogTitle"
+    >
+
+        <form
+            id="vehicleForm"
+            class="vehicle-form"
+            novalidate
+        >
+
+            <div class="panel-title-row">
+
+                <div>
+
+                    <p class="eyebrow">
+                        VEHICLE MANAGER
+                    </p>
+
+                    <h2 id="vehicleDialogTitle">
+                        Add New Vehicle
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <label class="form-field">
+
+                <span class="info-label">VEHICLE NAME</span>
+
+                <input
+                    id="vehicleNameInput"
+                    name="name"
+                    type="text"
+                    required
+                    maxlength="40"
+                    pattern="[A-Za-z][A-Za-z0-9_\-]{0,39}"
+                    placeholder="Vehicle_03"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+                <small>Letters, digits, _ or -, starting with a letter. Used as the vehicle ID.</small>
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span class="info-label">COLOUR (OPTIONAL)</span>
+
+                <input
+                    id="vehicleColorInput"
+                    name="color"
+                    type="text"
+                    maxlength="20"
+                    placeholder="e.g. green or #22c55e"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+            </label>
+
+
+            <!-- Filled by vehicle-manager.js: device quota when
+                 adding, device source when editing. -->
+            <p
+                id="vehicleProvisionInfo"
+                class="provision-info"
+            ></p>
+
+
+            <label
+                id="vehicleLinkToggleRow"
+                class="link-toggle"
+            >
+
+                <input
+                    id="vehicleLinkToggle"
+                    type="checkbox"
+                >
+
+                <span>
+                    Link an existing ThingsBoard device instead (advanced)
+                </span>
+
+            </label>
+
+
+            <fieldset
+                id="vehicleLinkFields"
+                class="link-fields"
+                hidden
+            >
+
+                <legend class="visually-hidden">Existing ThingsBoard device</legend>
+
+                <label class="form-field">
+
+                    <span class="info-label">VEHICLE ID (THINGSBOARD DEVICE ID)</span>
+
+                    <input
+                        id="vehicleDeviceInput"
+                        name="device_id"
+                        type="text"
+                        required
+                        maxlength="64"
+                        pattern="[A-Za-z0-9\-]{1,64}"
+                        placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+
+                </label>
+
+
+                <label class="form-field">
+
+                    <span class="info-label">VEHICLE TOKEN (THINGSBOARD ACCESS TOKEN)</span>
+
+                    <input
+                        id="vehicleTokenInput"
+                        name="token"
+                        type="password"
+                        maxlength="128"
+                        placeholder="Device access token"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+
+                    <small id="vehicleTokenHelp">Stored on the server only. It is never shown again.</small>
+
+                </label>
+
+            </fieldset>
+
+
+            <p
+                id="vehicleFormStatus"
+                class="form-status"
+                role="alert"
+            ></p>
+
+
+            <div class="form-actions">
+
+                <button
+                    id="vehicleCancelButton"
+                    class="control-button secondary"
+                    type="button"
+                >
+                    CANCEL
+                </button>
+
+                <button
+                    id="vehicleSaveButton"
+                    class="control-button primary"
+                    type="submit"
+                >
+                    SAVE VEHICLE
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+
+    <!-- =====================================================
+         DELETE VEHICLE DIALOG
+    ====================================================== -->
+
+    <dialog
+        id="deleteDialog"
+        class="vehicle-dialog"
+        aria-labelledby="deleteDialogTitle"
+    >
+
+        <form
+            id="deleteForm"
+            class="vehicle-form"
+            method="dialog"
+        >
+
+            <div class="panel-title-row">
+
+                <div>
+
+                    <p class="eyebrow">
+                        VEHICLE MANAGER
+                    </p>
+
+                    <h2 id="deleteDialogTitle">
+                        Delete vehicle?
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <p
+                id="deleteDialogText"
+                class="provision-info"
+            ></p>
+
+
+            <label
+                id="deleteDeviceRow"
+                class="link-toggle danger"
+                hidden
+            >
+
+                <input
+                    id="deleteDeviceToggle"
+                    type="checkbox"
+                >
+
+                <span>
+                    Also delete the device in ThingsBoard.
+                    This cannot be undone: the device and its telemetry
+                    history are lost, and one device slot is freed.
+                </span>
+
+            </label>
+
+
+            <div class="form-actions">
+
+                <button
+                    class="control-button secondary"
+                    type="submit"
+                    value="cancel"
+                >
+                    CANCEL
+                </button>
+
+                <button
+                    id="deleteConfirmButton"
+                    class="control-button emergency"
+                    type="submit"
+                    value="delete"
+                >
+                    DELETE VEHICLE
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <span>
+            Fleet Control System
+        </span>
+
+        <span>•</span>
+
+        <span>
+            IoT Vehicle Coordination
+        </span>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         TEMPLATES
+         One copy is cloned per vehicle by script.js.
+    ====================================================== -->
+
+    <template id="vehicleCardTemplate">
+
+        <article class="vehicle-card">
+
+            <div class="vehicle-header">
+
+                <div class="vehicle-title">
+
+                    <span class="vehicle-indicator"></span>
+
+                    <div>
+
+                        <h2 data-field="name">
+                            Vehicle
+                        </h2>
+
+                        <p data-field="tag">
+                            APRILTAG TAG
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="vehicle-header-actions">
+
+                    <span
+                        class="vehicle-badge"
+                        data-field="badge"
+                    >
+                        —
+                    </span>
+
+                    <button
+                        class="vehicle-delete-button"
+                        type="button"
+                        data-field="delete"
+                        title="Remove this vehicle from the fleet"
+                    >
+                        ✕
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- VEHICLE INFORMATION -->
+
+            <div class="vehicle-info-grid">
+
+                <div class="info-box">
+                    <span class="info-label">STATUS</span>
+                    <strong data-field="status">—</strong>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">LOCATION</span>
+                    <strong data-field="location">—</strong>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">SPEED</span>
+                    <strong data-field="speed">0 km/h</strong>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">CAPACITY</span>
+                    <strong data-field="capacity">1000 kg</strong>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">BRAKE</span>
+                    <strong data-field="brake">—</strong>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">DIRECTION</span>
+                    <strong data-field="direction">—</strong>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">APRIL TAG</span>
+                    <strong data-field="qr">NOT DETECTED</strong>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">RADAR</span>
+                    <strong data-field="radar">CLEAR</strong>
+                </div>
+
+            </div>
+
+
+            <!-- LOAD -->
+
+            <div class="load-section">
+
+                <div class="load-header">
+
+                    <span>
+                        CURRENT LOAD
+                    </span>
+
+                    <strong data-field="load">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="progress"
+                    data-field="progress"
+                    role="progressbar"
+                    aria-label="Current load"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                >
+
+                    <div
+                        class="progress-fill"
+                        data-field="progress-fill"
+                        style="width: 0%;"
+                    ></div>
+
+                </div>
+
+
+                <div class="load-footer">
+
+                    <span data-field="load-footer">
+                        0%
+                    </span>
+
+                    <span>
+                        Maximum: 100%
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </template>
+
+
+    <template id="roadVehicleTemplate">
+
+        <div
+            class="road-vehicle"
+            style="left: 5%;"
+        >
+
+            <div class="mini-vehicle">
+
+                <div class="mini-body"></div>
+
+                <div class="mini-cabin">
+
+                    <div class="mini-window"></div>
+
+                </div>
+
+                <span class="wheel wheel-left"></span>
+                <span class="wheel wheel-right"></span>
+
+            </div>
+
+
+            <span
+                class="road-vehicle-label"
+                data-field="short-name"
+            >
+                V00
+            </span>
+
+        </div>
+
+    </template>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="config.js"></script>
+
+    <script src="script.js"></script>
+
+    <script src="vehicle-manager.js"></script>
+
+</body>
+
+</html>

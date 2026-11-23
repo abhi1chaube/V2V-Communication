@@ -1,0 +1,15 @@
+{
+  "title": "Radio degradation and a dead zone",
+  "description": "First the whole radio degrades (50 % packet loss for 20 s): links turn 'degraded', retries and dead reckoning keep the fleet moving. Then a dead zone covers the outbound road for 12 s: vehicles in it hear nobody and hold (heartbeat fail-safe); the others treat them as hazards at their last known position. Contact returns, everyone resumes.",
+  "seed": 99,
+  "min_vehicles": 2,
+  "duration_s": 200,
+  "setup": {
+    "dispatch": "concurrent",
+    "autopilot": "fleet"
+  },
+  "timeline": [
+    {"t": 15, "action": "v2v_config", "config": {"loss_rate": 0.5}, "duration_s": 20},
+    {"t": 45, "action": "link_loss", "segments": ["outbound_1", "outbound_2"], "duration_s": 12}
+  ]
+}

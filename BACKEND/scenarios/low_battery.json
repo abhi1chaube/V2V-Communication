@@ -1,0 +1,13 @@
+{
+  "title": "Low battery",
+  "description": "Vehicle #1 starts with 25 % battery. At Stop 3 it works out that it would reach Stop 1 below 20 %, so after handing the next cycle over it takes the charging-bay spur off the return leg. On the way it drops below 20 % and raises a LOW_BATTERY DENM (and would refuse a handover). Charged to 95 %, it returns to Stop 1 and rejoins the rotation.",
+  "seed": 5,
+  "min_vehicles": 2,
+  "duration_s": 420,
+  "setup": {
+    "dispatch": "handover",
+    "autopilot": "fleet",
+    "battery": {"#1": 25}
+  },
+  "timeline": []
+}

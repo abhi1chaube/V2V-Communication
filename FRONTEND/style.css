@@ -1,0 +1,3686 @@
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #eef6ff 0%,
+            #f8fafc 42%,
+            #eef2f7 100%
+        );
+
+    color: #172033;
+
+    min-height: 100vh;
+
+    padding: 30px 6%;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 28px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #64748b;
+
+    margin-bottom: 7px;
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: 800;
+
+    letter-spacing: -0.8px;
+}
+
+.subtitle {
+    margin-top: 7px;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+.demo-notice {
+    margin-top: 9px;
+
+    color: #475569;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.demo-mode-pill {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 9px 13px;
+
+    border: 1px solid #bbf7d0;
+    border-radius: 30px;
+
+    background: #f0fdf4;
+    color: #166534;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   SYSTEM STATUS
+========================================================= */
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 9px 15px;
+
+    border-radius: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 7px 20px rgba(15, 23, 42, 0.06);
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 5px rgba(34, 197, 94, 0.12);
+}
+
+.system-status.offline .status-dot {
+    background: #ef4444;
+
+    box-shadow:
+        0 0 0 5px rgba(239, 68, 68, 0.12);
+}
+
+
+/* =========================================================
+   VEHICLE DASHBOARD
+========================================================= */
+
+.vehicle-dashboard {
+    display: grid;
+
+    /*
+       Any number of cards. auto-fit stretches two cards to
+       half width each, matching the original two-column look.
+    */
+    grid-template-columns:
+        repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 22px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   VEHICLE ACCENT COLOURS
+   Set per card / route marker by script.js:
+   - .accent-yellow / .accent-blue: original palette
+   - inline --vehicle-accent: colour from Vehicle_NN_COLOR
+   - otherwise the neutral default below
+========================================================= */
+
+.vehicle-card,
+.road-vehicle,
+.vehicle-dot {
+    --vehicle-accent: #64748b;
+
+    --vehicle-accent-soft:
+        color-mix(in srgb, var(--vehicle-accent) 13%, transparent);
+
+    --vehicle-light:
+        color-mix(in srgb, var(--vehicle-accent) 55%, #ffffff);
+
+    --vehicle-deep: var(--vehicle-accent);
+
+    --vehicle-border:
+        color-mix(in srgb, var(--vehicle-accent) 80%, #000000);
+
+    --vehicle-cabin-light:
+        color-mix(in srgb, var(--vehicle-accent) 35%, #ffffff);
+
+    --vehicle-label:
+        color-mix(in srgb, var(--vehicle-accent) 75%, #000000);
+}
+
+.accent-yellow {
+    --vehicle-accent: #facc15;
+    --vehicle-accent-soft: rgba(250, 204, 21, 0.13);
+    --vehicle-light: #fde047;
+    --vehicle-deep: #eab308;
+    --vehicle-border: #ca8a04;
+    --vehicle-cabin-light: #fef08a;
+    --vehicle-label: #a16207;
+}
+
+.accent-blue {
+    --vehicle-accent: #2563eb;
+    --vehicle-accent-soft: rgba(37, 99, 235, 0.12);
+    --vehicle-light: #60a5fa;
+    --vehicle-deep: #2563eb;
+    --vehicle-border: #1d4ed8;
+    --vehicle-cabin-light: #93c5fd;
+    --vehicle-label: #1d4ed8;
+}
+
+
+/* =========================================================
+   VEHICLE CARD
+========================================================= */
+
+.vehicle-card {
+    position: relative;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 20px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.07);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 16px 35px rgba(15, 23, 42, 0.09);
+}
+
+.vehicle-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: var(--vehicle-accent);
+}
+
+.vehicle-card {
+    cursor: pointer;
+}
+
+.vehicle-card.selected {
+    box-shadow:
+        0 0 0 2px var(--vehicle-accent),
+        0 12px 30px rgba(15, 23, 42, 0.07);
+}
+
+
+/* =========================================================
+   VEHICLE HEADER
+========================================================= */
+
+.vehicle-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 19px;
+}
+
+.vehicle-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.vehicle-title h2 {
+    font-size: 19px;
+
+    font-weight: 800;
+}
+
+.vehicle-title p {
+    margin-top: 3px;
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+    letter-spacing: 0.6px;
+}
+
+
+/* =========================================================
+   VEHICLE INDICATOR
+========================================================= */
+
+.vehicle-indicator {
+    width: 17px;
+    height: 17px;
+
+    border-radius: 50%;
+
+    background: var(--vehicle-accent);
+
+    box-shadow:
+        0 0 0 6px var(--vehicle-accent-soft);
+}
+
+
+/* =========================================================
+   VEHICLE BADGE
+========================================================= */
+
+.vehicle-badge {
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #ecfdf5;
+
+    border: 1px solid #bbf7d0;
+
+    color: #15803d;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+}
+
+.vehicle-badge.loading {
+    background: #fff7ed;
+
+    border-color: #fed7aa;
+
+    color: #c2410c;
+}
+
+.vehicle-badge.stopped {
+    background: #fef2f2;
+
+    border-color: #fecaca;
+
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   VEHICLE INFO GRID
+========================================================= */
+
+.vehicle-info-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+}
+
+.info-box {
+    min-height: 62px;
+
+    padding: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf2f7;
+
+    border-radius: 11px;
+
+    transition: 0.2s ease;
+}
+
+.info-box:hover {
+    background: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 13px rgba(15, 23, 42, 0.05);
+}
+
+.info-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #64748b;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+}
+
+.info-box strong {
+    font-size: 12px;
+
+    color: #172033;
+}
+
+.vehicle-card [data-field="status"] {
+    color: #16a34a;
+}
+
+.vehicle-card [data-field="brake"] {
+    color: #dc2626;
+}
+
+.vehicle-card [data-field="qr"] {
+    color: #64748b;
+}
+
+.vehicle-card [data-field="radar"] {
+    color: #16a34a;
+}
+
+
+/* =========================================================
+   LOAD SECTION
+========================================================= */
+
+.load-section {
+    margin-top: 14px;
+
+    padding: 14px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf2f7;
+
+    border-radius: 13px;
+}
+
+.load-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 8px;
+
+    color: #475569;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.load-header strong {
+    color: #172033;
+
+    font-size: 17px;
+
+    font-weight: 800;
+}
+
+.progress {
+    width: 100%;
+
+    height: 9px;
+
+    background: #e2e8f0;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+
+    border-radius: 20px;
+
+    transition:
+        width 0.5s ease;
+}
+
+.vehicle-card .progress-fill {
+    background:
+        linear-gradient(
+            90deg,
+            var(--vehicle-light),
+            var(--vehicle-deep)
+        );
+}
+
+.load-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 7px;
+
+    color: #64748b;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   COMMON PANEL
+========================================================= */
+
+.panel {
+    background: rgba(255, 255, 255, 0.97);
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.panel-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 21px;
+}
+
+.panel-header h2 {
+    font-size: 20px;
+
+    font-weight: 800;
+
+    margin-bottom: 4px;
+}
+
+.panel-subtitle {
+    color: #64748b;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   LIVE ROUTE PANEL
+========================================================= */
+
+.live-route-panel {
+    padding: 23px;
+
+    margin-bottom: 23px;
+}
+
+.live-indicator {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    background: #ecfdf5;
+
+    border: 1px solid #bbf7d0;
+
+    color: #15803d;
+
+    font-size: 9px;
+
+    font-weight: 800;
+}
+
+.live-indicator span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 4px rgba(34, 197, 94, 0.12);
+
+    animation: livePulse 1.8s infinite;
+}
+
+@keyframes livePulse {
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(34, 197, 94, 0.35);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 7px rgba(34, 197, 94, 0);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+
+/* =========================================================
+   ROUTE MAP
+========================================================= */
+
+.route-map {
+    position: relative;
+
+    width: 100%;
+
+    height: 245px;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8fafc,
+            #eef2f7
+        );
+
+    border: 1px solid #e2e8f0;
+}
+
+
+/* =========================================================
+   SUBTLE BACKGROUND GRID
+========================================================= */
+
+.route-map::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 80px,
+            rgba(148, 163, 184, 0.045) 81px
+        );
+
+    pointer-events: none;
+}
+
+/* =========================================================
+   ROAD
+========================================================= */
+
+.road {
+    position: absolute;
+
+    left: 7%;
+    right: 7%;
+
+    top: 50%;
+
+    /*
+       THINNER ROAD
+       so Stop markers and labels remain clearly visible
+    */
+    height: 42px;
+
+    transform: translateY(-50%);
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #475569,
+            #334155
+        );
+
+    box-shadow:
+        0 7px 16px rgba(15, 23, 42, 0.17);
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   ROAD EDGES
+========================================================= */
+
+.road::before,
+.road::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    height: 2px;
+
+    background: rgba(255, 255, 255, 0.65);
+}
+
+
+.road::before {
+    top: 6px;
+}
+
+
+.road::after {
+    bottom: 6px;
+}
+
+
+/* =========================================================
+   ROAD CENTER LINE
+========================================================= */
+
+.road-line {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 50%;
+
+    height: 3px;
+
+    transform: translateY(-50%);
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #f8fafc 0,
+            #f8fafc 22px,
+            transparent 22px,
+            transparent 38px
+        );
+
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   ROUTE STOPS
+========================================================= */
+
+/*
+   IMPORTANT:
+
+   Stop markers stay aligned with the road center.
+
+   The road is thinner, so the markers no longer
+   visually disappear inside the road.
+*/
+
+.route-stop {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 10;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   STOP POSITIONS
+========================================================= */
+
+.stop-start {
+    left: 7%;
+}
+
+
+.stop-loading {
+    left: 50%;
+}
+
+
+.stop-warehouse {
+    left: 93%;
+}
+
+
+/* =========================================================
+   APRILTAG STOP MARKER
+========================================================= */
+
+.april-tag {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    border: 2px solid #0f172a;
+    background: #ffffff;
+    border-radius: 2px;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, 0.16);
+    z-index: 16;
+    pointer-events: none;
+}
+
+.april-tag::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    background:
+        linear-gradient(
+            90deg,
+            #000000 0 20%,
+            transparent 20% 40%,
+            #000000 40% 60%,
+            transparent 60% 80%,
+            #000000 80% 100%
+        ),
+        linear-gradient(
+            #000000 0 20%,
+            transparent 20% 40%,
+            #000000 40% 60%,
+            transparent 60% 80%,
+            #000000 80% 100%
+        );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.april-tag-label {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #334155;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 17;
+}
+
+
+/* =========================================================
+   STOP MARKER
+========================================================= */
+
+.stop-marker {
+
+    width: 27px;
+    height: 27px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    border: 4px solid #cbd5e1;
+
+    box-shadow:
+        0 3px 10px rgba(15, 23, 42, 0.18);
+
+    /*
+       Marker sits clearly above the road.
+    */
+    position: relative;
+
+    z-index: 12;
+}
+
+
+.stop-marker span {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #94a3b8;
+}
+
+
+/* =========================================================
+   ACTIVE STOP
+========================================================= */
+
+.stop-marker.active {
+
+    border-color: #2563eb;
+
+    background: #eff6ff;
+
+    box-shadow:
+        0 0 0 6px rgba(37, 99, 235, 0.10),
+        0 4px 13px rgba(37, 99, 235, 0.20);
+}
+
+
+.stop-marker.active span {
+    background: #2563eb;
+}
+
+
+/* =========================================================
+   WAREHOUSE MARKER
+========================================================= */
+
+.stop-marker.warehouse {
+    border-color: #64748b;
+}
+
+
+.stop-marker.warehouse span {
+    background: #475569;
+}
+
+
+/* =========================================================
+   STOP LABEL
+========================================================= */
+
+.stop-label {
+
+    position: absolute;
+
+    /*
+       Label is BELOW the road/marker area.
+    */
+    top: 40px;
+
+    width: 125px;
+
+    text-align: center;
+
+    z-index: 15;
+}
+
+
+.stop-label strong {
+
+    display: block;
+
+    color: #334155;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+}
+
+
+.stop-label small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #94a3b8;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   ROAD VEHICLE
+========================================================= */
+
+.road-vehicle {
+    position: absolute;
+
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 20;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 4px;
+
+    pointer-events: none;
+}
+
+
+/*
+   Vehicles are kept visually separated by a per-vehicle
+   vertical lane offset (margin-top) set in script.js.
+*/
+
+
+/* =========================================================
+   MINI VEHICLE
+========================================================= */
+
+.mini-vehicle {
+    position: relative;
+
+    width: 54px;
+    height: 31px;
+
+    filter:
+        drop-shadow(
+            0 4px 4px rgba(15, 23, 42, 0.30)
+        );
+}
+
+
+/* =========================================================
+   VEHICLE BODY
+========================================================= */
+
+.mini-body {
+    position: absolute;
+
+    left: 0;
+    top: 5px;
+
+    width: 38px;
+    height: 21px;
+
+    border-radius: 5px 2px 2px 5px;
+}
+
+
+/* =========================================================
+   VEHICLE CABIN
+========================================================= */
+
+.mini-cabin {
+    position: absolute;
+
+    right: 0;
+    top: 9px;
+
+    width: 18px;
+    height: 17px;
+
+    border-radius: 2px 5px 5px 2px;
+}
+
+.mini-window {
+    position: absolute;
+
+    left: 3px;
+    top: 3px;
+
+    width: 10px;
+    height: 7px;
+
+    background: #dbeafe;
+
+    border: 1px solid rgba(255, 255, 255, 0.85);
+
+    border-radius: 2px;
+}
+
+
+/* =========================================================
+   VEHICLE COLOURS (from the accent variables)
+========================================================= */
+
+.road-vehicle .mini-body {
+    background:
+        linear-gradient(
+            180deg,
+            var(--vehicle-light),
+            var(--vehicle-deep)
+        );
+
+    border: 1px solid var(--vehicle-border);
+}
+
+.road-vehicle .mini-cabin {
+    background:
+        linear-gradient(
+            180deg,
+            var(--vehicle-cabin-light),
+            var(--vehicle-deep)
+        );
+
+    border: 1px solid var(--vehicle-border);
+}
+
+
+/* =========================================================
+   WHEELS
+========================================================= */
+
+.wheel {
+    position: absolute;
+
+    bottom: -4px;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #111827;
+
+    border: 2px solid #475569;
+}
+
+.wheel-left {
+    left: 8px;
+}
+
+.wheel-right {
+    right: 8px;
+}
+
+
+/* =========================================================
+   VEHICLE LABEL
+========================================================= */
+
+.road-vehicle-label {
+    padding: 2px 6px;
+
+    border-radius: 5px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 3px 7px rgba(15, 23, 42, 0.12);
+
+    font-size: 7px;
+
+    font-weight: 800;
+}
+
+.road-vehicle .road-vehicle-label {
+    color: var(--vehicle-label);
+}
+
+
+/* =========================================================
+   ROUTE COMMUNICATION
+========================================================= */
+
+.route-communication {
+    position: absolute;
+
+    left: 50%;
+    bottom: 14px;
+
+    transform:
+        translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.93);
+
+    border: 1px solid #e2e8f0;
+
+    color: #64748b;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    z-index: 25;
+}
+
+.route-communication span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 3px rgba(34, 197, 94, 0.10);
+}
+
+
+/* =========================================================
+   MONITORING GRID
+========================================================= */
+
+.monitoring-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 22px;
+
+    margin-bottom: 23px;
+}
+
+
+/* =========================================================
+   RADAR PANEL
+========================================================= */
+
+.radar-panel,
+.sensor-panel {
+    padding: 21px;
+}
+
+.panel-title-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.panel-title-row h2 {
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   RADAR LIGHT
+========================================================= */
+
+.radar-light {
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 6px rgba(34, 197, 94, 0.12);
+}
+
+.radar-light.red {
+    background: #ef4444;
+
+    box-shadow:
+        0 0 0 6px rgba(239, 68, 68, 0.12);
+
+    animation: dangerPulse 1s infinite;
+}
+
+@keyframes dangerPulse {
+    50% {
+        box-shadow:
+            0 0 0 10px rgba(239, 68, 68, 0);
+    }
+}
+
+
+/* =========================================================
+   RADAR DISPLAY
+========================================================= */
+
+.radar-display {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    min-height: 145px;
+
+    padding: 15px;
+
+    background:
+        radial-gradient(
+            circle,
+            #f8fafc,
+            #eef2f7
+        );
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 15px;
+}
+
+
+/* =========================================================
+   RADAR CIRCLE
+========================================================= */
+
+.radar-circle {
+    position: relative;
+
+    width: 110px;
+    height: 110px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    border: 2px solid #94a3b8;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 0 27%,
+            rgba(37, 99, 235, 0.05) 28% 29%,
+            transparent 30% 49%,
+            rgba(37, 99, 235, 0.05) 50% 51%,
+            transparent 52% 72%,
+            rgba(37, 99, 235, 0.05) 73% 74%,
+            transparent 75%
+        );
+
+    overflow: hidden;
+}
+
+.radar-circle::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 0;
+    bottom: 0;
+
+    width: 1px;
+
+    background: rgba(37, 99, 235, 0.20);
+}
+
+.radar-circle::after {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background: rgba(37, 99, 235, 0.20);
+}
+
+
+/* =========================================================
+   RADAR SWEEP
+========================================================= */
+
+.radar-sweep {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 48px;
+    height: 2px;
+
+    transform-origin: left center;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            transparent
+        );
+
+    animation:
+        radarSweep 2.5s linear infinite;
+}
+
+@keyframes radarSweep {
+    from {
+        transform:
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   RADAR OBSTACLE
+========================================================= */
+
+.radar-obstacle {
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    left: 73%;
+    top: 30%;
+
+    box-shadow:
+        0 0 0 4px rgba(34, 197, 94, 0.13);
+}
+
+.radar-obstacle.detected {
+    background: #ef4444;
+
+    box-shadow:
+        0 0 0 5px rgba(239, 68, 68, 0.15);
+}
+
+
+/* =========================================================
+   RADAR STATUS TEXT
+========================================================= */
+
+.radar-status {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.radar-status strong {
+    color: #16a34a;
+
+    font-size: 17px;
+}
+
+.radar-status strong.danger {
+    color: #dc2626;
+}
+
+.radar-status span {
+    color: #64748b;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SENSOR HEALTH
+========================================================= */
+
+.sensor-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.sensor-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 13px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf2f7;
+
+    border-radius: 10px;
+
+    font-size: 11px;
+}
+
+.sensor-row strong {
+    font-size: 8px;
+
+    letter-spacing: 0.6px;
+}
+
+.health-good {
+    color: #16a34a;
+}
+
+.health-bad {
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   CONTROL PANEL
+========================================================= */
+
+.control-panel {
+    padding: 22px;
+
+    margin-bottom: 23px;
+}
+
+.control-buttons {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+.control-button {
+    min-height: 45px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 10px 13px;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.control-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.control-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.control-button:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.45;
+}
+
+.control-button.primary {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    box-shadow:
+        0 6px 15px rgba(37, 99, 235, 0.20);
+}
+
+.control-button.loading-button {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #d97706
+        );
+
+    box-shadow:
+        0 6px 15px rgba(217, 119, 6, 0.18);
+}
+
+.control-button.secondary {
+    color: #334155;
+
+    background: #f1f5f9;
+
+    border: 1px solid #dbe3ec;
+}
+
+.control-button.emergency {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #dc2626
+        );
+
+    box-shadow:
+        0 6px 15px rgba(220, 38, 38, 0.18);
+}
+
+.command-status {
+    margin-top: 13px;
+
+    padding: 10px 13px;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf2f7;
+
+    color: #64748b;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   ACTIVITY LOG
+========================================================= */
+
+.activity-panel {
+    padding: 24px;
+
+    margin-bottom: 23px;
+
+    background:
+        linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+
+    border-color: #cbdced;
+
+    border-left: 3px solid #86efac;
+}
+
+.event-count {
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    color: #15803d;
+
+    background: #ecfdf5;
+
+    border: 1px solid #bbf7d0;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+.activity-log {
+    max-height: 330px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.log-entry {
+    display: grid;
+
+    grid-template-columns: 86px minmax(0, 1fr);
+
+    gap: 14px;
+
+    min-height: 52px;
+
+    align-items: center;
+
+    padding: 12px 14px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    border: 1px solid #d6e3ef;
+
+    border-left: 2px solid #bbf7d0;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    line-height: 1.35;
+
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.log-entry:hover {
+    background: #ffffff;
+
+    border-color: #cbd9e8;
+
+    transform: translateX(2px);
+}
+
+.log-time {
+    color: #64748b;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.log-message {
+    min-width: 0;
+
+    color: #26364a;
+
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------- J2735-STYLED MESSAGES ---------- */
+
+.log-entry.j2735 {
+    border-left-color: #60a5fa;
+}
+
+/* The log is a height-limited flex column: without this, an
+   expanded row is squashed to min-height and its JSON
+   overlaps the rows below. The log scrolls instead. */
+.activity-log > .log-entry {
+    flex-shrink: 0;
+}
+
+.log-entry.j2735.expanded {
+    background: #ffffff;
+
+    border-color: #bfdbfe;
+
+    transform: none;
+}
+
+/* Summary line is a button: reset native styling. */
+.log-summary {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    padding: 0;
+
+    border: none;
+
+    background: none;
+
+    font: inherit;
+
+    font-family: Consolas, "Courier New", monospace;
+
+    font-size: 11px;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.log-summary:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.3);
+
+    outline-offset: 3px;
+
+    border-radius: 4px;
+}
+
+.log-summary > span:nth-child(2) {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.log-chip {
+    flex: none;
+
+    padding: 2px 7px;
+
+    border-radius: 20px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.log-chip.bsm {
+    background: #dbeafe;
+
+    color: #1d4ed8;
+}
+
+.log-chip.v2v {
+    background: #ede9fe;
+
+    color: #6d28d9;
+}
+
+.log-caret {
+    flex: none;
+
+    color: #64748b;
+}
+
+.log-json-panel {
+    grid-column: 1 / -1;
+
+    min-width: 0;
+}
+
+.log-json-note {
+    margin: 0 0 6px;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-style: italic;
+}
+
+.log-json {
+    max-height: 170px;
+
+    margin: 0;
+
+    padding: 10px 12px;
+
+    overflow: auto;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 8px;
+
+    background: #0f172a;
+
+    color: #e2e8f0;
+
+    font-family: Consolas, "Courier New", monospace;
+
+    font-size: 11px;
+
+    line-height: 1.45;
+
+    white-space: pre;
+}
+
+
+/* =========================================================
+   COMMUNICATION CARD
+========================================================= */
+
+.communication-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px 20px;
+
+    margin-bottom: 23px;
+
+    background: #ffffff;
+
+    border: 1px solid #cbdcf1;
+
+    border-left: 3px solid #93c5fd;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+.communication-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 21px;
+
+    font-weight: 800;
+}
+
+.communication-content h3 {
+    font-size: 14px;
+
+    margin-bottom: 4px;
+}
+
+.communication-content p:last-child {
+    color: #64748b;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+.communication-status {
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    flex-shrink: 0;
+
+    white-space: nowrap;
+
+    color: #15803d;
+
+    font-size: 9px;
+
+    font-weight: 800;
+}
+
+.communication-status > span:first-child {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+}
+
+.communication-status.offline {
+    color: #b91c1c;
+}
+
+.communication-status.offline > span:first-child {
+    background: #ef4444;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px;
+
+    color: #94a3b8;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    body {
+        padding: 25px 4%;
+    }
+
+    .vehicle-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .monitoring-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .control-buttons {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 18px 12px;
+    }
+
+    .header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+    }
+
+    .system-status {
+        align-self: flex-start;
+    }
+
+    .vehicle-card {
+        padding: 18px;
+    }
+
+    .vehicle-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .live-route-panel {
+        padding: 17px;
+    }
+
+    .panel-header {
+        align-items: flex-start;
+    }
+
+    .route-map {
+        height: 215px;
+    }
+
+    .road {
+        left: 5%;
+        right: 5%;
+
+        height: 58px;
+    }
+
+    .stop-label {
+        width: 90px;
+    }
+
+    .stop-label strong {
+        font-size: 7px;
+    }
+
+    .stop-label small {
+        font-size: 7px;
+    }
+
+    .mini-vehicle {
+        transform: scale(0.82);
+    }
+
+    .road-vehicle-label {
+        font-size: 6px;
+    }
+
+    .radar-display {
+        flex-direction: column;
+
+        justify-content: center;
+
+        text-align: center;
+    }
+
+    .control-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .communication-card {
+        align-items: flex-start;
+    }
+
+    .communication-status {
+        display: none;
+    }
+
+    footer {
+        flex-wrap: wrap;
+    }
+}
+/* =========================================================
+   COMPACT SINGLE-PAGE FLEET DASHBOARD
+   PASTE THIS AT THE VERY END OF style.css
+   ========================================================= */
+
+@media (min-width: 951px) {
+
+    /* ---------- PAGE ---------- */
+
+    body {
+        padding: 8px 3%;
+    }
+
+    .header {
+        margin-bottom: 6px;
+    }
+
+    .eyebrow {
+        font-size: 9px;
+        line-height: 10px;
+        margin-bottom: 3px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+        line-height: 28px;
+        letter-spacing: -0.7px;
+    }
+
+    .subtitle {
+        margin-top: 2px;
+        font-size: 10px;
+        line-height: 12px;
+    }
+
+    .system-status {
+        padding: 6px 10px;
+        font-size: 9px;
+    }
+
+
+    /* =====================================================
+       MAIN SECTION ORDER
+
+       1. Vehicle Dashboard
+       2. Fleet Commands
+       3. Live Route
+       4. Radar + Sensor Health
+       5. Activity Log
+       6. V2V Communication
+       ===================================================== */
+
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+
+    /* =====================================================
+       VEHICLE DASHBOARD
+       ===================================================== */
+
+    .vehicle-dashboard {
+        order: 1;
+
+        gap: 14px;
+        margin-bottom: 0;
+    }
+
+    .vehicle-card {
+        padding: 10px;
+        border-radius: 16px;
+    }
+
+    .vehicle-header {
+        margin-bottom: 7px;
+    }
+
+    .vehicle-title {
+        gap: 9px;
+    }
+
+    .vehicle-title h2 {
+        font-size: 17px;
+    }
+
+    .vehicle-title p {
+        margin-top: 2px;
+        font-size: 8px;
+    }
+
+    .vehicle-indicator {
+        width: 14px;
+        height: 14px;
+    }
+
+    .vehicle-badge {
+        padding: 4px 8px;
+        font-size: 7px;
+    }
+
+
+    /* 4 columns = much shorter vehicle cards */
+
+    .vehicle-info-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 7px;
+    }
+
+    .info-box {
+        min-height: 38px;
+        padding: 6px 8px;
+        border-radius: 9px;
+    }
+
+    .info-label {
+        margin-bottom: 2px;
+        font-size: 7px;
+    }
+
+    .info-box strong {
+        font-size: 10px;
+    }
+
+
+    /* LOAD */
+
+    .load-section {
+        margin-top: 6px;
+        padding: 7px;
+        border-radius: 10px;
+    }
+
+    .load-header {
+        margin-bottom: 5px;
+        font-size: 9px;
+    }
+
+    .load-header strong {
+        font-size: 15px;
+    }
+
+    .progress {
+        height: 7px;
+    }
+
+    .load-footer {
+        margin-top: 4px;
+        font-size: 7px;
+    }
+
+
+    /* =====================================================
+       FLEET COMMANDS
+       ===================================================== */
+
+    .control-panel {
+        order: 2;
+
+        padding: 10px;
+        margin-bottom: 0;
+        border-radius: 15px;
+    }
+
+    .control-panel .panel-header {
+        margin-bottom: 6px;
+    }
+
+    .control-panel .panel-header h2 {
+        font-size: 17px;
+        margin-bottom: 2px;
+    }
+
+    .control-panel .panel-subtitle {
+        font-size: 8px;
+    }
+
+    .control-buttons {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    .control-button {
+        min-height: 30px;
+        padding: 5px 8px;
+        font-size: 8px;
+        border-radius: 8px;
+    }
+
+    .command-status {
+        margin-top: 5px;
+        padding: 5px 8px;
+        font-size: 8px;
+    }
+
+
+    /* =====================================================
+       LIVE ROUTE
+       ===================================================== */
+
+    .live-route-panel {
+        order: 3;
+
+        padding: 10px;
+        margin-bottom: 0;
+        border-radius: 15px;
+    }
+
+    .live-route-panel .panel-header {
+        margin-bottom: 6px;
+    }
+
+    .live-route-panel .panel-header h2 {
+        font-size: 17px;
+    }
+
+    .live-route-panel .panel-subtitle {
+        font-size: 8px;
+    }
+
+    /*
+       IMPORTANT:
+       Route remains horizontal.
+       It is NOT forced into a small side column.
+    */
+
+    .route-map {
+        height: 105px;
+        border-radius: 12px;
+    }
+
+    .road {
+        left: 5%;
+        right: 5%;
+        height: 34px;
+    }
+
+    .road::before {
+        top: 5px;
+    }
+
+    .road::after {
+        bottom: 5px;
+    }
+
+    .road-line {
+        height: 2px;
+    }
+
+
+    /* ROUTE STOPS */
+
+    .stop-marker {
+        width: 23px;
+        height: 23px;
+        border-width: 3px;
+    }
+
+    .stop-marker span {
+        width: 5px;
+        height: 5px;
+    }
+
+    .stop-label {
+        top: 32px;
+        width: 115px;
+    }
+
+    .stop-label strong {
+        font-size: 7px;
+    }
+
+    .stop-label small {
+        margin-top: 2px;
+        font-size: 7px;
+    }
+
+
+    /* VEHICLES ON ROUTE */
+
+    .mini-vehicle {
+        width: 46px;
+        height: 27px;
+        transform: scale(0.88);
+    }
+
+    .road-vehicle {
+        gap: 2px;
+    }
+
+    .road-vehicle-label {
+        padding: 2px 5px;
+        font-size: 6px;
+    }
+
+
+    /* V01 <-> V02 */
+
+    .route-communication {
+        left: auto;
+        right: 10px;
+        bottom: 6px;
+        transform: none;
+        padding: 4px 9px;
+        font-size: 7px;
+    }
+
+
+    /* =====================================================
+       RADAR + SENSOR HEALTH
+       ===================================================== */
+
+    .monitoring-grid {
+        order: 4;
+
+        gap: 14px;
+        margin-bottom: 0;
+    }
+
+    .radar-panel,
+    .sensor-panel {
+        padding: 14px;
+        border-radius: 15px;
+    }
+
+    .panel-title-row {
+        margin-bottom: 10px;
+    }
+
+    .panel-title-row h2 {
+        font-size: 16px;
+    }
+
+
+    /* RADAR */
+
+    .radar-display {
+        min-height: 105px;
+        gap: 18px;
+        padding: 10px;
+        border-radius: 11px;
+    }
+
+    .radar-circle {
+        width: 82px;
+        height: 82px;
+    }
+
+    .radar-sweep {
+        width: 36px;
+    }
+
+    .radar-status {
+        gap: 4px;
+    }
+
+    .radar-status strong {
+        font-size: 15px;
+    }
+
+    .radar-status span {
+        font-size: 8px;
+    }
+
+
+    /* SENSOR HEALTH */
+
+    .sensor-list {
+        gap: 6px;
+    }
+
+    .sensor-row {
+        padding: 8px 10px;
+        border-radius: 8px;
+        font-size: 9px;
+    }
+
+    .sensor-row strong {
+        font-size: 7px;
+    }
+
+
+    /* =====================================================
+       ACTIVITY LOG
+       Lower priority → below important controls
+       ===================================================== */
+
+    .activity-panel {
+        order: 5;
+
+        padding: 14px;
+        margin-bottom: 0;
+        border-radius: 15px;
+    }
+
+    .activity-panel .panel-header {
+        margin-bottom: 8px;
+    }
+
+    .activity-panel .panel-header h2 {
+        font-size: 16px;
+    }
+
+    .activity-log {
+        max-height: 260px;
+        gap: 7px;
+    }
+
+    .log-entry {
+        grid-template-columns: 76px 1fr;
+        gap: 10px;
+        min-height: 48px;
+        padding: 10px 11px;
+        font-size: 11px;
+    }
+
+    .log-time {
+        font-size: 10px;
+    }
+
+
+    /* =====================================================
+       V2V COMMUNICATION
+       ===================================================== */
+
+    .communication-card {
+        order: 6;
+
+        padding: 12px 14px;
+        margin-bottom: 0;
+        border-radius: 14px;
+    }
+
+    .communication-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        font-size: 17px;
+    }
+
+    .communication-content h3 {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    .communication-content p:last-child {
+        font-size: 8px;
+    }
+
+    .communication-status {
+        font-size: 8px;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    footer {
+        padding: 5px;
+        font-size: 8px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 601px) and (max-width: 950px) {
+
+    body {
+        padding: 18px 3%;
+    }
+
+    .header {
+        margin-bottom: 16px;
+    }
+
+    .header h1 {
+        font-size: 27px;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .vehicle-dashboard {
+        order: 1;
+        gap: 14px;
+        margin-bottom: 0;
+    }
+
+    .control-panel {
+        order: 2;
+        margin-bottom: 0;
+    }
+
+    .live-route-panel {
+        order: 3;
+        margin-bottom: 0;
+    }
+
+    .monitoring-grid {
+        order: 4;
+        margin-bottom: 0;
+    }
+
+    .activity-panel {
+        order: 5;
+        margin-bottom: 0;
+    }
+
+    .communication-card {
+        order: 6;
+        margin-bottom: 0;
+    }
+
+    .vehicle-card {
+        padding: 16px;
+    }
+
+    .vehicle-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .route-map {
+        height: 175px;
+    }
+
+    .control-buttons {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .vehicle-dashboard {
+        order: 1;
+        margin-bottom: 0;
+    }
+
+    .control-panel {
+        order: 2;
+        margin-bottom: 0;
+    }
+
+    .live-route-panel {
+        order: 3;
+        margin-bottom: 0;
+    }
+
+    .monitoring-grid {
+        order: 4;
+        margin-bottom: 0;
+    }
+
+    .activity-panel {
+        order: 5;
+        margin-bottom: 0;
+    }
+
+    .communication-card {
+        order: 6;
+        margin-bottom: 0;
+    }
+}
+
+.thingsboard-dashboard-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 7px 10px;
+
+    border-radius: 7px;
+
+    background: #0f766e;
+    color: #ffffff;
+
+    font-size: 10px;
+    font-weight: 800;
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 18px rgba(15, 118, 110, 0.2);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.thingsboard-dashboard-button:hover {
+    background: #115e59;
+    transform: translateY(-1px);
+    box-shadow:
+        0 11px 22px rgba(15, 118, 110, 0.25);
+}
+
+.thingsboard-dashboard-button:focus-visible {
+    outline: 3px solid rgba(20, 184, 166, 0.35);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   FLEET SECTIONS (generated from fleet data)
+   Reuse the existing panel / info-box look.
+========================================================= */
+
+/*
+   minmax(0, ...) lets a column shrink below its content's
+   width, so the fleet table scrolls inside .table-scroll
+   instead of widening the page.
+*/
+.fleet-summary-grid,
+.fleet-detail-grid {
+    display: grid;
+
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+
+    gap: 14px;
+}
+
+.fleet-detail-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+    /* After Radar + Sensor Health (order 4 in DOM order) */
+    order: 4;
+}
+
+.fleet-overview-panel,
+.alerts-panel,
+.vehicle-detail-panel,
+.fleet-table-panel,
+.fleet-toolbar {
+    padding: 14px;
+
+    border-radius: 15px;
+}
+
+
+/* ---------- OVERVIEW ---------- */
+
+.overview-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 7px;
+}
+
+.overview-tile {
+    padding: 8px 10px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf2f7;
+
+    border-radius: 9px;
+}
+
+.overview-tile strong {
+    display: block;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    color: #172033;
+}
+
+.overview-tile strong.health-good {
+    color: #16a34a;
+}
+
+.overview-tile strong.health-bad {
+    color: #dc2626;
+}
+
+
+/* ---------- ALERTS ---------- */
+
+.alert-count {
+    min-width: 24px;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    background: #ecfdf5;
+
+    border: 1px solid #bbf7d0;
+
+    color: #15803d;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-align: center;
+}
+
+.alert-count.has-alerts {
+    background: #fef2f2;
+
+    border-color: #fecaca;
+
+    color: #dc2626;
+}
+
+.alert-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    max-height: 150px;
+
+    overflow-y: auto;
+}
+
+.alert-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 7px 10px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf2f7;
+
+    border-left: 3px solid #f59e0b;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+.alert-row.critical {
+    border-left-color: #dc2626;
+}
+
+.alert-row strong {
+    color: #172033;
+}
+
+.alert-row span {
+    color: #64748b;
+
+    white-space: nowrap;
+}
+
+.alert-empty {
+    color: #64748b;
+
+    font-size: 10px;
+}
+
+
+/* ---------- SEARCH + FILTERS ---------- */
+
+.fleet-toolbar {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: flex-end;
+
+    gap: 12px;
+}
+
+.fleet-search {
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 220px;
+}
+
+.fleet-search input,
+.vehicle-select select {
+    padding: 7px 10px;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #172033;
+
+    font: inherit;
+
+    font-size: 11px;
+}
+
+.fleet-search input:focus-visible,
+.vehicle-select select:focus-visible,
+.filter-button:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.3);
+
+    outline-offset: 1px;
+}
+
+.fleet-filters {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+.filter-button {
+    padding: 7px 11px;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 20px;
+
+    background: #f1f5f9;
+
+    color: #334155;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.filter-button[aria-pressed="true"] {
+    background: #2563eb;
+
+    border-color: #2563eb;
+
+    color: #ffffff;
+}
+
+.vehicle-empty {
+    grid-column: 1 / -1;
+
+    padding: 14px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    text-align: center;
+}
+
+
+/* ---------- DETAIL PANEL ---------- */
+
+.detail-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 7px;
+}
+
+.detail-grid .info-box {
+    min-height: 0;
+
+    padding: 7px 9px;
+}
+
+.detail-grid .info-box strong {
+    font-size: 11px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------- FLEET TABLE ---------- */
+
+.table-scroll {
+    max-height: 260px;
+
+    overflow: auto;
+}
+
+.fleet-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 10px;
+}
+
+.fleet-table th {
+    position: sticky;
+
+    top: 0;
+
+    padding: 7px 8px;
+
+    background: #f8fafc;
+
+    color: #64748b;
+
+    font-size: 9px;
+
+    letter-spacing: 0.6px;
+
+    text-align: left;
+
+    text-transform: uppercase;
+}
+
+.fleet-table td {
+    padding: 7px 8px;
+
+    border-top: 1px solid #edf2f7;
+
+    white-space: nowrap;
+}
+
+.fleet-table tbody tr {
+    cursor: pointer;
+}
+
+.fleet-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.fleet-table tbody tr.selected {
+    background: #eff6ff;
+}
+
+.fleet-table .vehicle-dot {
+    display: inline-block;
+
+    width: 9px;
+    height: 9px;
+
+    margin-right: 6px;
+
+    border-radius: 50%;
+
+    background: var(--vehicle-accent);
+
+    vertical-align: middle;
+}
+
+
+/* ---------- SHARED ---------- */
+
+.visually-hidden {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+
+    clip: rect(0 0 0 0);
+
+    white-space: nowrap;
+}
+
+.log-entry.client {
+    border-left-color: #93c5fd;
+}
+
+
+@media (max-width: 950px) {
+
+    .fleet-summary-grid,
+    .fleet-detail-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    .overview-grid,
+    .detail-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fleet-search {
+        min-width: 0;
+
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   VEHICLE MANAGER
+   Reuses .panel, .control-button, .fleet-search and
+   .fleet-table; only the differences are defined here.
+========================================================= */
+
+.toolbar-add-button {
+    min-height: 0;
+
+    margin-left: auto;
+}
+
+/* main is a flex column ordered 1-6 (see above); the
+   manager comes last, after V2V Communication. */
+.vehicle-manager-panel {
+    order: 7;
+
+    padding: 22px;
+
+    margin-bottom: 23px;
+
+    scroll-margin-top: 16px;
+}
+
+.manager-toolbar {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+}
+
+.manager-count {
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+.vehicle-manager-panel .command-status {
+    margin: 0 0 10px;
+}
+
+.command-status[data-tone="success"] {
+    color: #15803d;
+
+    background: #f0fdf4;
+
+    border-color: #bbf7d0;
+}
+
+.command-status[data-tone="warning"] {
+    color: #b45309;
+
+    background: #fffbeb;
+
+    border-color: #fde68a;
+}
+
+.command-status[data-tone="error"] {
+    color: #b91c1c;
+
+    background: #fef2f2;
+
+    border-color: #fecaca;
+}
+
+.manager-table-scroll {
+    max-height: 340px;
+}
+
+/* Rows are not selectable, unlike the fleet table. */
+.manager-table tbody tr {
+    cursor: default;
+}
+
+.manager-table tbody tr.incomplete td:first-child strong {
+    color: #b45309;
+}
+
+.manager-mono {
+    font-family: Consolas, "Courier New", monospace;
+}
+
+.manager-actions {
+    display: flex;
+
+    gap: 6px;
+}
+
+.manager-action {
+    padding: 5px 10px;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 7px;
+
+    background: #f1f5f9;
+
+    color: #334155;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.manager-action.edit:hover {
+    border-color: #2563eb;
+
+    color: #2563eb;
+}
+
+.manager-action.delete:hover {
+    border-color: #dc2626;
+
+    color: #dc2626;
+}
+
+.manager-action:focus-visible,
+.form-field input:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.3);
+
+    outline-offset: 1px;
+}
+
+.manager-empty {
+    padding: 14px;
+
+    color: #64748b;
+
+    text-align: center;
+}
+
+
+/* ---------- DELETE ON CARDS + FLEET TABLE ---------- */
+
+.vehicle-header-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.vehicle-delete-button {
+    width: 24px;
+    height: 24px;
+
+    padding: 0;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.vehicle-delete-button:hover {
+    border-color: #dc2626;
+
+    background: #fef2f2;
+
+    color: #dc2626;
+}
+
+.vehicle-delete-button:focus-visible {
+    outline: 3px solid rgba(220, 38, 38, 0.3);
+
+    outline-offset: 1px;
+}
+
+.fleet-table td[data-col="actions"] {
+    width: 1%;
+
+    padding-left: 0;
+}
+
+.fleet-table td[data-col="actions"] .vehicle-delete-button {
+    width: 20px;
+    height: 20px;
+
+    font-size: 10px;
+}
+
+
+/* ---------- RELEASE EMERGENCY ---------- */
+
+.control-button.release {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #15803d
+        );
+
+    box-shadow:
+        0 6px 15px rgba(22, 163, 74, 0.18);
+}
+
+.control-button[hidden] {
+    display: none;
+}
+
+/* Five buttons in one row while Release is shown (desktop). */
+@media (min-width: 951px) {
+
+    .control-buttons.with-release {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+
+/* ---------- AUTO-PROVISIONING ---------- */
+
+.manager-counts {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+#managerQuota {
+    padding: 3px 9px;
+
+    border: 1px solid #bbf7d0;
+
+    border-radius: 20px;
+
+    background: #f0fdf4;
+
+    color: #15803d;
+}
+
+#managerQuota.quota-full {
+    border-color: #fde68a;
+
+    background: #fffbeb;
+
+    color: #b45309;
+}
+
+.source-badge {
+    display: inline-block;
+
+    padding: 3px 8px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
+}
+
+.source-badge.managed {
+    background: #eff6ff;
+
+    color: #1d4ed8;
+}
+
+.source-badge.linked {
+    background: #f1f5f9;
+
+    color: #475569;
+}
+
+.provision-info {
+    margin: 0;
+
+    padding: 8px 10px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 8px;
+
+    background: #eff6ff;
+
+    color: #1e3a8a;
+
+    font-size: 10px;
+
+    line-height: 1.45;
+}
+
+.provision-info:empty {
+    display: none;
+}
+
+.provision-info[data-tone="warning"] {
+    border-color: #fde68a;
+
+    background: #fffbeb;
+
+    color: #92400e;
+}
+
+.link-toggle {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    color: #334155;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.link-toggle input {
+    margin-top: 1px;
+}
+
+.link-toggle.danger {
+    padding: 8px 10px;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 8px;
+
+    background: #fef2f2;
+
+    color: #991b1b;
+
+    line-height: 1.45;
+}
+
+.link-fields {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin: 0;
+
+    padding: 12px;
+
+    border: 1px dashed #cbd5e1;
+
+    border-radius: 10px;
+}
+
+.link-fields[hidden],
+.link-toggle[hidden] {
+    display: none;
+}
+
+
+/* ---------- ADD / EDIT DIALOG ---------- */
+
+.vehicle-dialog {
+    width: min(440px, calc(100vw - 32px));
+
+    margin: auto;
+
+    padding: 0;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.25);
+}
+
+.vehicle-dialog::backdrop {
+    background: rgba(15, 23, 42, 0.45);
+}
+
+.vehicle-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 22px;
+}
+
+.vehicle-form .panel-title-row {
+    margin-bottom: 4px;
+}
+
+.form-field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.form-field input {
+    padding: 8px 10px;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #172033;
+
+    font: inherit;
+
+    font-size: 12px;
+}
+
+.form-field small {
+    color: #64748b;
+
+    font-size: 9px;
+}
+
+.form-status {
+    min-height: 1em;
+
+    color: #b91c1c;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+}
+
+.form-actions .control-button {
+    min-height: 38px;
+}
+
+@media (max-width: 600px) {
+
+    .toolbar-add-button {
+        width: 100%;
+
+        margin-left: 0;
+    }
+}
+
+
+/* =========================================================
+   READABILITY
+   Minimum 9px text. Placed last so it wins over the
+   compact layout overrides above.
+========================================================= */
+
+.info-label,
+.vehicle-badge,
+.load-footer,
+.stop-label strong,
+.stop-label small,
+.road-vehicle-label,
+.april-tag-label,
+.sensor-row strong {
+    font-size: 9px;
+}
+
+@media (min-width: 951px) {
+
+    .vehicle-title p,
+    .control-button,
+    .command-status,
+    .control-panel .panel-subtitle,
+    .live-route-panel .panel-subtitle,
+    .radar-status span,
+    .communication-content p:last-child,
+    .communication-status,
+    footer {
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+
+        scroll-behavior: auto !important;
+    }
+}

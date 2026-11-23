@@ -1,0 +1,15 @@
+{
+  "title": "Breakdown with handover reassignment",
+  "description": "Vehicle #2, next in line, breaks down while it waits at Stop 1. When Vehicle #1 finishes its cycle it asks #2 to take over; #2 refuses (VEHICLE_FAULT), so the cycle is reassigned to #3. #2 is repaired later and rejoins the rotation.",
+  "seed": 31,
+  "min_vehicles": 3,
+  "duration_s": 420,
+  "setup": {
+    "dispatch": "handover",
+    "autopilot": "fleet"
+  },
+  "timeline": [
+    {"t": 30, "action": "breakdown", "vehicle": "#2"},
+    {"t": 200, "action": "repair", "vehicle": "#2"}
+  ]
+}

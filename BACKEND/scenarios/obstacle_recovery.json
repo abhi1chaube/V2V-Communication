@@ -1,0 +1,14 @@
+{
+  "title": "Obstacle and recovery",
+  "description": "An obstacle appears on the road to the loading point. The first vehicle sees it on its radar, brakes and broadcasts an OBSTACLE DENM; the vehicle behind holds short of the hazard. When the obstacle is removed both carry on by themselves.",
+  "seed": 7,
+  "min_vehicles": 2,
+  "duration_s": 200,
+  "setup": {
+    "dispatch": "concurrent",
+    "autopilot": "fleet"
+  },
+  "timeline": [
+    {"t": 5, "action": "obstacle", "id": "pallet", "segment": "outbound_1", "s": 70, "label": "Fallen pallet", "duration_s": 35}
+  ]
+}

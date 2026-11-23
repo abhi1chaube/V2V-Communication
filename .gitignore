@@ -1,0 +1,47 @@
+# V2V Fleet Control System
+# Written before the project is put under git (git is set up later,
+# on a private PC). Before the FIRST commit, run `git status` and
+# check that no file with a token or password is listed.
+
+# ---- Secrets: never commit ------------------------------------------
+.env
+*.env
+!.env.example
+BACKEND/data/vehicles.json
+BACKEND/data/vehicles.json.*
+BACKEND/data/.vehicles-*.tmp
+*.pem
+*.key
+
+# ---- Archives (the old project zip contains BACKEND/.env) -------------
+*.zip
+
+# ---- Runtime data ----------------------------------------------------
+BACKEND/data/*.db
+BACKEND/data/*.db-*
+
+# ---- Python ----------------------------------------------------------
+venv/
+.venv/
+**/venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# ---- Node / frontend build (Phase 7) ---------------------------------
+node_modules/
+dist/
+
+# ---- Editors and OS ----------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ---- Unrelated projects that live in this folder -----------------------
+# They are separate projects with their own .env files; give each its own
+# repository if you want them under version control.
+library-app/
+travel-planner/
+fastapi-learn/

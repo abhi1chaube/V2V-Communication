@@ -1,0 +1,61 @@
+{
+  "name": "V2V demo yard",
+  "units": "metres, km/h for speed limits",
+  "description": "A loop: Stop 1 -> junction -> Stop 2 (loading) -> Stop 3 (warehouse) -> return leg -> junction -> Stop 1, with a charging bay on a spur off the return leg. Between Stop 1 and the junction there is ONE lane used in both directions (departing and returning vehicles), which needs right-of-way.",
+
+  "kinematics": {
+    "max_accel_mps2": 1.0,
+    "max_decel_mps2": 2.0,
+    "emergency_decel_mps2": 6.0,
+    "creep_speed_mps": 0.3
+  },
+
+  "nodes": {
+    "S1": {"x": 0,   "y": 0,   "kind": "stop",     "stop": "stop_1",   "label": "Stop 1 (origin)"},
+    "J":  {"x": 40,  "y": 0,   "kind": "junction",                     "label": "Junction"},
+    "S2": {"x": 140, "y": 0,   "kind": "stop",     "stop": "stop_2",   "label": "Stop 2 (loading)"},
+    "S3": {"x": 260, "y": 0,   "kind": "stop",     "stop": "stop_3",   "label": "Stop 3 (warehouse)"},
+    "C1": {"x": 260, "y": 80,  "kind": "corner",                       "label": "North-east corner"},
+    "R":  {"x": 150, "y": 80,  "kind": "junction",                     "label": "Charging turn-off"},
+    "C2": {"x": 40,  "y": 80,  "kind": "corner",                       "label": "North-west corner"},
+    "CB": {"x": 150, "y": 120, "kind": "charging", "stop": "charging", "label": "Charging bay"}
+  },
+
+  "segments": [
+    {"id": "depart",     "from": "S1", "to": "J",  "lane": "shared_s1", "max_speed_kmh": 12},
+    {"id": "outbound_1", "from": "J",  "to": "S2"},
+    {"id": "outbound_2", "from": "S2", "to": "S3"},
+    {"id": "return_1",   "from": "S3", "to": "C1"},
+    {"id": "return_2",   "from": "C1", "to": "R"},
+    {"id": "return_3",   "from": "R",  "to": "C2"},
+    {"id": "return_4",   "from": "C2", "to": "J"},
+    {"id": "arrive",     "from": "J",  "to": "S1", "lane": "shared_s1", "max_speed_kmh": 12},
+    {"id": "charge_in",  "from": "R",  "to": "CB", "max_speed_kmh": 8},
+    {"id": "charge_out", "from": "CB", "to": "R",  "max_speed_kmh": 8}
+  ],
+
+  "shared_lanes": {
+    "shared_s1": {
+      "label": "Single lane between Stop 1 and the junction",
+      "segments": ["depart", "arrive"]
+    }
+  },
+
+  "rsus": [
+    {
+      "id": "RSU1",
+      "x": 130,
+      "y": 40,
+      "range_m": 150,
+      "label": "Yard roadside unit (loading-dock controller)",
+      "manages_stop": "stop_2"
+    }
+  ],
+
+  "next_stop": {
+    "S1": "S2",
+    "S2": "S3",
+    "S3": "S1",
+    "CB": "S1"
+  }
+}

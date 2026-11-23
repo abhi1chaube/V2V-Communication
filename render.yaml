@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: v2v-fleet-demo-api
+    runtime: python
+    plan: free
+    rootDir: BACKEND
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.6
+      - key: AUTH_REQUIRED
+        value: "false"
+      - key: ALLOW_REMOTE_FLEET_ADMIN
+        value: "false"
+      - key: DEV_RELOAD
+        value: "false"
+      - key: FLEET_DATA_FILE
+        value: data/vehicles.demo.json
+      - key: CORS_ORIGINS
+        sync: false

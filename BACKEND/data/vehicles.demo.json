@@ -1,0 +1,16 @@
+{
+  "vehicles": [
+    {
+      "name": "Vehicle_01",
+      "device_id": "demo-vehicle-01",
+      "token": "",
+      "color": "yellow"
+    },
+    {
+      "name": "Vehicle_02",
+      "device_id": "demo-vehicle-02",
+      "token": "",
+      "color": "blue"
+    }
+  ]
+}
